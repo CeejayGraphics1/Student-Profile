@@ -1,0 +1,399 @@
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            background-image: url('/static/images/Espam logo.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            opacity: 0.1;
+            z-index: -2;
+        }
+
+        .top-shapes {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+
+        .top-shape-left {
+            left: -0px;
+            top: -0px;
+            width: 250px;
+            height: 250px;
+            background-image: url('/static/images/circles.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+            animation: slideInLeft 1s ease-out;
+        }
+
+        .top-shape-right {
+            position: absolute;
+            right: -0px;
+            top: -0px;
+            width: 250px;
+            height: 250px;
+            background-image: url('/static/images/circles1.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            opacity: 0.9;
+            animation: slideInRight 1s ease-out;
+        }
+
+        .wave-container {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: -1;
+            height: 100px;
+        }
+
+        .wave {
+            width: 100%;
+            height: 100px; 
+            background-image: url('/static/images/footer_shape.png');
+            background-size: cover;
+            background-position: bottom;
+            background-repeat: no-repeat;
+        }
+
+        .main-content {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between; /* Changed from center to space-between */
+            padding: 1rem;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .welcome-text {
+            color: #2A1B6D;
+            font-size: 3rem;
+            margin-bottom: 0.2rem;
+            text-align: center;
+            font-weight: 700;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .university-name {
+            margin: auto;
+            background-color: #2A1B6D;
+            color: white;
+            padding: 0.5rem 2rem;
+            border-radius: 10px;
+            font-size: 2.5rem;
+            font-weight: 700;
+            width: 70%;
+            text-align: center;
+            margin-bottom: 0rem;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .student-text {
+            color: #2A1B6D;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .login1-btn {
+            background-color: #2A1B6D;
+            color: rgb(255, 255, 255);
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-size: 1.2rem;
+            animation: fadeInUp 0.8s ease-out 0.6s both;
+        }
+
+        .login1-btn:hover {
+            background-color: #2000ac;
+            color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .copyright {
+            color: #2A1B6D;
+            text-align: center;
+            font-size: 0.9rem;
+            margin-bottom: 5rem;
+            font-weight: 600;
+            animation: fadeInUp 0.8s ease-out 0.8s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 0.9;
+            }
+        }
+
+        @keyframes waveEffect {
+            from {
+                transform: translateY(0);
+            }
+            to {
+                transform: translateY(-10px);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-text {
+                font-size: 2rem;
+            }
+            
+            .university-name {
+                font-size: 1.5rem;
+            }
+            
+            .student-text {
+                font-size: 1.3rem;
+            }
+            
+            .wave {
+                height: 70px;
+            }
+
+            .top-shape-left,
+            .top-shape-right {
+                width: 200px;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-text {
+                font-size: 1.5rem;
+            }
+            
+            .university-name {
+                font-size: 1.2rem;
+                padding: 0.8rem 1.5rem;
+            }
+            
+            .student-text {
+                font-size: 1rem;
+            }
+
+            .top-shape-left,
+            .top-shape-right {
+                width: 150px;
+                height: 150px;
+            }
+            
+            .top-shape-left {
+                left: -30px;
+                top: -30px;
+            }
+            
+            .top-shape-right {
+                right: -30px;
+                top: -30px;
+            }
+
+            body::before {
+                width: 200px;
+                height: 200px;
+            }
+
+            .wave {
+                height: 50px;
+            }
+        }
+
+/* Add these new styles for the login page */
+
+.content-wrapper-login {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.login-container {
+    background-color: white;
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    margin-top: 2rem;
+}
+
+.login-title {
+    background-color: #2A1B6D;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+    text-align: center;
+    display: inline-block;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.login-btn {
+    background-color: #2A1B6D;
+    color: white;
+    padding: 10px 40px;
+    border: none;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    width: auto;
+    display: inline-block;
+    margin-top: 1rem;
+}
+
+.login-btn:hover {
+    background-color: #231760;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(42, 27, 109, 0.2);
+}
+
+.form-control {
+    border: 2px solid #e1e1e1;
+    border-radius: 25px;
+    padding: 10px 18px;
+    margin-bottom: 0.8rem;
+    width: 100%;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+
+
+.form-control:focus {
+    border-color: #2A1B6D;
+    box-shadow: 0 0 0 0.2rem rgba(42, 27, 109, 0.1);
+    outline: none;
+}
+
+.network-image {
+    display: none;
+}
+
+@media (min-width: 992px) {
+    .network-image {
+        display: block;
+        max-height: 70vh;
+    }
+    
+    .network-image img {
+        max-height: 100%;
+        object-fit: contain;
+    }
+}
+
+.copyright-login {
+    position: absolute;
+    bottom: 2rem;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding: 0.5rem;
+    margin: 0;
+}
+
+.network-image img {
+    max-width: 100%;
+    height: auto;
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .login-container {
+        padding: 1.5rem;
+    }
+    
+    .login-title {
+        font-size: 1.5rem;
+    }
+    
+    .network-image {
+        margin-top: 2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .login-container {
+        padding: 1rem;
+    }
+    
+    .login-title {
+        font-size: 1.3rem;
+    }
+    
+    .form-control {
+        padding: 0.6rem 1rem;
+    }
+}
