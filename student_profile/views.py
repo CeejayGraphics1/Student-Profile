@@ -13,3 +13,6 @@ def login(request):
         else:
             return HttpResponse("Invalid credentials")
     return render(request, 'login.html')
+
+def dashboard(request):
+    return render(request, 'dashboard.html')
