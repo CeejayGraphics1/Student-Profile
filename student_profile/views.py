@@ -16,3 +16,15 @@ def login(request):
 
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+def view_students(request):
+    return render(request, 'view_student.html')
+
+def student_details(request):
+    return render(request, 'student_details.html')
+
+def upload(request):
+    return render(request, 'upload.html')
+
+def modify(request):
+    return render(request, 'modify.html')

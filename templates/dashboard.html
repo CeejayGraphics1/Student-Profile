@@ -14,17 +14,43 @@
       type="text/css"
       href="{% static 'css/style.css' %}"
     />
+    <!-- Add before </body> tag -->
+    <script defer src="{% static 'js/script.js' %}"></script>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   </head>
   <body>
     <div class="dashboard-main">
       <nav class="dashboard-nav">
         <div class="dashboard-container">
-          <button class="menu-toggle" type="button">
-            <i class="lni lni-menu"></i>
-          </button>
+          <div class="menu-wrapper">
+            <button class="menu-toggle" type="button" id="menuToggle">
+              <i class="lni lni-menu"></i>
+            </button>
+            <div class="department-menu" id="departmentMenu">
+              <div class="dept-header-wrapper">
+                <div class="dept-header">Available Department</div>
+                <button class="close-menu" id="closeMenu">
+                  <i class="lni lni-close"></i>
+                </button>
+              </div>
+              <ul class="dept-list">
+                <li>SOCIOLOGY</li>
+                <li>ECONOMICS</li>
+                <li>POLITICAL SCIENCE</li>
+                <li>COMPUTER SCIENCE</li>
+                <li>MASS COMMUNICATION</li>
+                <li>ACCOUNTING & FINANCE</li>
+                <li>PUBLIC ADMINISTRATION</li>
+                <li>BUSSINESS ADMINSTRATION</li>
+                <li>HUMAN RESOURCE MANAGEMENT</li>
+                <li>INTERNATIONAL RELATION & DIPLOMACY</li>
+                <li>ENVIRONMENTAL HEALTH MANAGEMENT</li>
+                <li>COMMUNITY HEALTH MANAGEMENT</li>
+                <li>NURSING</li>
+              </ul>
+            </div>
+          </div>
           <div class="dashboard-search">
-            <i class="lni lni-search-alt search-icon"></i>
             <input
               type="search"
               placeholder="Search for a student in ESPAM FORMATION UNIVERSITY..."
@@ -40,11 +66,11 @@
 
       <div class="content-wrapper">
         <div class="text-center pt-5">
-            <h1 class="welcome-text display-4">WELCOME TO</h1>
-            <div class="university-name mb-4">ESPAM FORMATION UNIVERISTY</div>
-            <h2 class="student-text">STUDENT IDENTITY WEBSITE</h2>
+          <h1 class="welcome-text display-4">WELCOME TO</h1>
+          <div class="university-name mb-4">ESPAM FORMATION UNIVERISTY</div>
+          <h2 class="student-text">STUDENT IDENTITY WEBSITE</h2>
         </div>
-    </div>
+      </div>
 
       <footer class="dashboard-footer">
         <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>

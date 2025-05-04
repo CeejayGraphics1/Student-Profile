@@ -1,0 +1,108 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Upload Student - ESPAM Formation University</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+</head>
+<body>
+    <div class="dashboard-main">
+        <nav class="dashboard-nav">
+            <div class="dashboard-container">
+                <button class="back-btn">
+                    <i class="lni lni-arrow-left"></i>
+                </button>
+                <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
+                <img src="{% static 'images/Espam Logo.png' %}" alt="ESPAM Logo" class="nav-logo" />
+            </div>
+        </nav>
+
+        <main class="upload-container">
+            <div class="page-title">
+                <h3>Complete To Upload a Student Information.</h3>
+            </div>
+
+            <div class="upload-content">
+                <div class="photo-upload-section">
+                    <div class="photo-container">
+                        <img id="preview" src="" alt="" />
+                        <div class="upload-overlay">
+                            <i class="lni lni-upload"></i>
+                            <span>UPLOAD A PICTURE</span>
+                        </div>
+                        <input type="file" id="photo-upload" accept="image/*" class="photo-input" />
+                    </div>
+                </div>
+
+                <form class="upload-form">
+                    <div class="form-field">
+                        <span class="field-name">Surname:</span>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <div class="form-field">
+                        <span class="field-name">Other Names:</span>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <div class="form-field">
+                        <span class="field-name">Date of Birth:</span>
+                        <input type="date" class="form-input" required>
+                    </div>
+                    <div class="form-field">
+                        <span class="field-name">Level:</span>
+                        <select class="form-input" required>
+                            <option value="" disabled selected>Select Level</option>
+                            <option value="100">100</option>
+                            <option value="200">200</option>
+                            <option value="300">300</option>
+                            <option value="400">400</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <span class="field-name">Department:</span>
+                        <select class="form-input" required>
+                            <option value="" disabled selected>Select Department</option>
+                            <option value="Sociology">Sociology</option>
+                            <option value="Economics">Economics</option>
+                            <option value="Political Science">Political Science</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Mass Communication">Mass Communication</option>
+                            <option value="Accounting & Finance">Accounting & Finance</option>
+                            <option value="Public Administration">Public Administration</option>
+                            <option value="Business Administration">Business Administration</option>
+                            <option value="Human Resource Management">Human Resource Management</option>
+                            <option value="International Relation & Diplomacy">International Relation & Diplomacy</option>
+                            <option value="Environmental Health Management">Environmental Health Management</option>
+                            <option value="Community Health Management">Community Health Management</option>
+                            <option value="Nursing">Nursing</option>
+                        </select>
+                    </div>
+                    <div class="form-field">
+                        <span class="field-name">Matric Number:</span>
+                        <input type="text" class="form-input" required>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="lni lni-upload"></i> UPLOAD
+                    </button>
+                </form>
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
+        </footer>
+    </div>
+
+    <script>
+        document.getElementById('photo-upload').onchange = function(e) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('preview').src = e.target.result;
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        };
+    </script>
+</body>
+</html>

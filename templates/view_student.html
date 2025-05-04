@@ -1,0 +1,325 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ESPAM Formation University - Student Lists</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'css/style.css' %}"
+    />
+  </head>
+  <body>
+    <div class="dashboard-main">
+      <nav class="dashboard-nav sticky-top">
+        <div class="dashboard-container">
+          <div class="menu-wrapper">
+            <button class="menu-toggle" type="button" id="menuToggle">
+              <i class="lni lni-menu"></i>
+            </button>
+            <div class="department-menu" id="departmentMenu">
+              <div class="dept-header-wrapper">
+                <div class="dept-header">Available Department</div>
+                <button class="close-menu" id="closeMenu">
+                  <i class="lni lni-close"></i>
+                </button>
+              </div>
+              <ul class="dept-list">
+                <li>SOCIOLOGY</li>
+                <li>ECONOMICS</li>
+                <li>POLITICAL SCIENCE</li>
+                <li>COMPUTER SCIENCE</li>
+                <li>MASS COMMUNICATION</li>
+                <li>ACCOUNTING & FINANCE</li>
+                <li>PUBLIC ADMINISTRATION</li>
+                <li>BUSSINESS ADMINSTRATION</li>
+                <li>HUMAN RESOURCE MANAGEMENT</li>
+                <li>INTERNATIONAL RELATION & DIPLOMACY</li>
+                <li>ENVIRONMENTAL HEALTH MANAGEMENT</li>
+                <li>COMMUNITY HEALTH MANAGEMENT</li>
+                <li>NURSING</li>
+              </ul>
+            </div>
+          </div>
+          <div class="dashboard-search">
+            <input
+              type="search"
+              placeholder="Search for a student in ESPAM FORMATION UNIVERSITY..."
+              class="dashboard-search-input"
+            />
+          </div>
+          <div class="nav-buttons">
+            <button class="dashboard-export">
+              <i class="lni lni-download"></i>
+              EXPORT
+            </button>
+            <button class="dashboard-upload">
+              <i class="lni lni-upload"></i>
+              UPLOAD
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="student-list-wrapper">
+        <div class="department-header">
+          <h2 class="department-title">Computer Science Department</h2>
+        </div>
+
+        <!-- 100 Level Section -->
+        <div class="level-section">
+          <div class="level-header">
+            <span class="level-tag">100L</span>
+            <button class="select-all-btn">SELECT ALL</button>
+          </div>
+          <div class="student-list">
+            <!-- 100L student cards -->
+            <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- 200 Level Section -->
+        <div class="level-section">
+          <div class="level-header">
+            <span class="level-tag">200L</span>
+            <button class="select-all-btn">SELECT ALL</button>
+          </div>
+          <div class="student-list">
+            <!-- 200L student cards -->
+            <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+              <div class="student-card">
+                <div class="student-info">
+                  <img
+                    src="{% static 'images/student1.jpg' %}"
+                    alt=""
+                    class="student-image"
+                  />
+                  <div class="student-details">
+                    <h3>Igwe Miracle OZOH</h3>
+                    <p>Date of Birth: 24/07/2002</p>
+                    <p>Level: 100</p>
+                    <p>Department: Computer Science...</p>
+                  </div>
+                </div>
+                <div class="student-select">
+                  <input type="checkbox" class="student-checkbox" />
+                </div>
+              </div>
+          </div>
+        </div>
+
+        <!-- Add more level sections as needed -->
+      </main>
+
+      <footer class="dashboard-footer">
+        <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
+      </footer>
+    </div>
+
+    <script src="{% static 'js/script.js' %}"></script>
+  </body>
+</html>
