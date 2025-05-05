@@ -28,3 +28,27 @@ def upload(request):
 
 def modify(request):
     return render(request, 'modify.html')
+
+def upload_admin(request):
+    return render(request, 'add-admin.html')
+
+def modify_admin(request):
+    return render(request, 'modify-admin.html')
+
+def view_admin(request):
+    return render(request, 'view-admin.html')
+
+def admin_details(request):
+    return render(request, 'admin-details.html')
+
+def staff(request):
+    return render(request, 'staff.html')
+
+def staff_view_students(request):
+    return render(request, 'staff-view-students.html')
+
+def staff_student_details(request):
+    return render(request, 'staff-student-details.html')
+
+def profile(request):
+    return render(request, 'profile.html')

@@ -1,0 +1,73 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Details - ESPAM Formation University</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+  </head>
+  <body>
+    <div class="dashboard-main">
+      <nav class="dashboard-nav">
+        <div class="dashboard-container">
+          <button class="back-btn">
+            <i class="lni lni-arrow-left"></i>
+          </button>
+          <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
+          <img
+            src="{% static 'images/Espam Logo.png' %}"
+            alt="ESPAM Logo"
+            class="nav-logo"
+          />
+        </div>
+      </nav>
+
+      <main class="student-details-container">
+        <div class="page-title">
+            <h3>This is the Information that was upoaded</h3>
+        </div>
+        <div class="student-details-content">
+          <div class="student-fields">
+            <div class="field-group">
+              <div class="field-label">First Name:</div>
+              <div class="field-value">FOLAKE</div>
+            </div>
+            <div class="field-group">
+              <div class="field-label">Last Name:</div>
+              <div class="field-value">Shirat</div>
+            </div>
+            <div class="field-group">
+              <div class="field-label">Email:</div>
+              <div class="field-value">admin@gmail.com</div>
+            </div>
+            <div class="role-selection">
+                <span class="role-label">Select Role:</span>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" value="staff" id="staffRole" required>
+                    <label class="form-check-label" for="staffRole">STAFF</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="role" value="admin" id="adminRole" required>
+                    <label class="form-check-label" for="adminRole">ADMIN</label>
+                </div>
+            </div>
+            <div class="student-actions">
+                  <button class="action-btn filter-btn d-flex justify-content-end">
+                    <i class="lni lni-pencil"></i>
+                    MODIFY
+                  </button>
+              </div>
+          </div>
+        </div>
+
+        
+      </main>
+
+      <footer class="dashboard-footer">
+        <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
+      </footer>
+    </div>
+  </body>
+</html>
