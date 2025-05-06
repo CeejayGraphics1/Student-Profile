@@ -66,3 +66,15 @@ class AdminStaff(AbstractUser):
             self.is_superuser = True  # Automatically make admin users superusers
         super().save(*args, **kwargs)
 
+
+class Student(models.Model):
+    surname = models.CharField(max_length=100)
+    other_names = models.CharField(max_length=150)
+    date_of_birth = models.DateField()
+    level = models.CharField(max_length=10)
+    department = models.CharField(max_length=100)
+    matric_number = models.CharField(max_length=50, unique=True)
+    photo = models.ImageField(upload_to='students/photos/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.surname} {self.other_names} - {self.matric_number}"

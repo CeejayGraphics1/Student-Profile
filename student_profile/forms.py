@@ -29,3 +29,17 @@ class ModifyMemberForm(forms.ModelForm):
             'email': forms.EmailInput(attrs={'class': 'form-control'}),
             'role': forms.RadioSelect(attrs={'class': 'form-check-input'})
         }
+
+
+from .models import Student
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = ['surname', 'other_names', 'date_of_birth', 'level', 'department', 'matric_number', 'photo']
+
+    def clean_matric_number(self):
+        matric_number = self.cleaned_data.get('matric_number')
+        if Student.objects.filter(matric_number=matric_number).exists():
+            raise forms.ValidationError("Matric number already exists.")
+        return matric_number

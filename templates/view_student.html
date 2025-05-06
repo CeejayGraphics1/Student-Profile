@@ -15,6 +15,7 @@
       type="text/css"
       href="{% static 'css/style.css' %}"
     />
+    <script defer src="{% static 'js/script.js' %}"></script>
   </head>
   <body>
     <div class="dashboard-main">
@@ -66,7 +67,7 @@
               class="dashboard-search-input"
             />
           </div>
-          <button class="dashboard-upload">
+          <button class="dashboard-upload" onclick="window.location.href='{% url 'upload' %}'">
             <i class="lni lni-upload"></i>
             UPLOAD
           </button>
@@ -75,406 +76,77 @@
 
       <main class="student-list-wrapper">
         <div class="department-header">
-          <h2 class="department-title">Computer Science Department</h2>
+            <h2 class="department-title">Computer Science Department</h2>
         </div>
-
-        <!-- 100 Level Section -->
+    
+        {% for level in levels %}
         <div class="level-section">
-          <div class="level-header">
-            <span class="level-tag">100L</span>
-            <button class="select-all-btn">SELECT ALL</button>
-          </div>
-          <div class="student-list">
-            <!-- 100L student cards -->
-            <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-          </div>
+            <div class="level-header">
+                <span class="level-tag">{{ level }}L</span>
+                <button class="select-all-btn">SELECT ALL</button>
+            </div>
+            <div class="student-list">
+                <!-- Loop through students based on level -->
+                {% if level == 100 %}
+                    {% for student in students_by_level.100 %}
+                        <div class="student-card">
+                            <div class="student-info">
+                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                                <div class="student-details">
+                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
+                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
+                                    <p>Level: {{ student.level }}</p>
+                                    <p>Department: Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="student-select">
+                                <input type="checkbox" class="student-checkbox" />
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% elif level == 200 %}
+                    {% for student in students_by_level.200 %}
+                        <div class="student-card">
+                            <div class="student-info">
+                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                                <div class="student-details">
+                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
+                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
+                                    <p>Level: {{ student.level }}</p>
+                                    <p>Department: Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="student-select">
+                                <input type="checkbox" class="student-checkbox" />
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% elif level == 300 %}
+                    {% for student in students_by_level.300 %}
+                        <div class="student-card">
+                            <div class="student-info">
+                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                                <div class="student-details">
+                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
+                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
+                                    <p>Level: {{ student.level }}</p>
+                                    <p>Department: Computer Science</p>
+                                </div>
+                            </div>
+                            <div class="student-select">
+                                <input type="checkbox" class="student-checkbox" />
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
         </div>
-
-        <!-- 200 Level Section -->
-        <div class="level-section">
-          <div class="level-header">
-            <span class="level-tag">200L</span>
-            <button class="select-all-btn">SELECT ALL</button>
-          </div>
-          <div class="student-list">
-            <!-- 200L student cards -->
-            <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 100</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-          </div>
-        </div>
-
-        <!-- 300 Level Section -->
-        <div class="level-section">
-          <div class="level-header">
-            <span class="level-tag">300L</span>
-            <button class="select-all-btn">SELECT ALL</button>
-          </div>
-          <div class="student-list">
-            <!-- 300L student cards -->
-            <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-              <div class="student-card">
-                <div class="student-info">
-                  <img
-                    src="{% static 'images/student1.jpg' %}"
-                    alt=""
-                    class="student-image"
-                  />
-                  <div class="student-details">
-                    <h3>Igwe Miracle OZOH</h3>
-                    <p>Date of Birth: 24/07/2002</p>
-                    <p>Level: 300</p>
-                    <p>Department: Computer Science...</p>
-                  </div>
-                </div>
-                <div class="student-select">
-                  <input type="checkbox" class="student-checkbox" />
-                </div>
-              </div>
-          </div>
-        </div>
-
-        <!-- Add more level sections as needed -->
-      </main>
+        {% endfor %}
+    </main>
+   
+   
+   
+    
 
       <footer class="dashboard-footer">
         <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>

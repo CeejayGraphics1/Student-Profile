@@ -1434,6 +1434,7 @@ close-menu:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
   border: 2px solid #e1e1e1;
   padding: 0.3rem 1.7rem;
+  margin-bottom: 7px;
 }
 
 .field-name {

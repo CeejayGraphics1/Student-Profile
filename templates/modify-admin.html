@@ -10,6 +10,7 @@
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <script defer src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
     <nav class="dashboard-nav">
@@ -27,12 +28,22 @@
             <div class="row justify-content-between align-items-center mb-5">
                 <div class="col-md-5">
                     <div class="login-form-container">
+                        {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} fade show">
+                                <i class="lni {% if message.tags == 'error' %}lni-close{% else %}lni-checkmark{% endif %}"></i>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
                         <h2 class="login-title">Update Admin/Staff Details</h2>
-                        <form method="POST" action="{% url 'login' %}">
+                        <form method="POST" action="{% url 'modify_admin' id=admin_or_staff.id %}">
                             {% csrf_token %}
                             <div class="form-group">
                                 <select class="form-control" name="title" required>
-                                    <option value="">Select Title</option>
+                                    <option value="{{ admin_or_staff.title }}" selected>{{ admin_or_staff.title }}</option>
                                     <option value="Mr">Mr</option>
                                     <option value="Mrs">Mrs</option>
                                     <option value="Miss">Miss</option>
@@ -41,25 +52,25 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="First Name" name="first_name" required>
+                                <input type="text" class="form-control" placeholder="First Name" name="first_name" value="{{ admin_or_staff.first_name }}" required>
                             </div>
                             <div class="form-group">
-                                <input type="text" class="form-control" placeholder="Last Name" name="last_name" required>
+                                <input type="text" class="form-control" placeholder="Last Name" name="last_name" value="{{ admin_or_staff.last_name }}" required>
                             </div>
                             <div class="form-group">
-                                <input type="email" class="form-control" placeholder="Email" name="email" required>
+                                <input type="email" class="form-control" placeholder="Email" name="email" value="{{ admin_or_staff.email }}" required>
                             </div>
                             <div class="form-group">
-                                <input type="password" class="form-control" placeholder="Password" name="password" required>
+                                <input type="password" class="form-control" placeholder="Password" name="password">
                             </div>
                             <div class="role-selection">
                                 <span class="role-label">Select Role:</span>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" value="staff" id="staffRole" required>
+                                    <input class="form-check-input" type="radio" name="role" value="staff" id="staffRole" {% if admin_or_staff.role == 'staff' %}checked{% endif %} required>
                                     <label class="form-check-label" for="staffRole">STAFF</label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="role" value="admin" id="adminRole" required>
+                                    <input class="form-check-input" type="radio" name="role" value="admin" id="adminRole" {% if admin_or_staff.role == 'admin' %}checked{% endif %} required>
                                     <label class="form-check-label" for="adminRole">ADMIN</label>
                                 </div>
                             </div>

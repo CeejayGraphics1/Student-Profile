@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import AdminStaff
+from .models import AdminStaff, Student
 
 class AdminStaffAdmin(UserAdmin):
     list_display = ('email', 'first_name', 'last_name', 'title', 'role', 'is_active', 'is_superuser')
@@ -33,3 +33,9 @@ class AdminStaffAdmin(UserAdmin):
             self.message_user(request, f"Error deleting user: {str(e)}", level='ERROR')
 
 admin.site.register(AdminStaff, AdminStaffAdmin)
+
+@admin.register(Student)
+class StudentAdmin(admin.ModelAdmin):
+    list_display = ('surname', 'other_names', 'matric_number', 'level', 'department')
+    search_fields = ('surname', 'other_names', 'matric_number', 'department')
+    list_filter = ('level', 'department')

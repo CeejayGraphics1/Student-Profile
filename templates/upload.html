@@ -7,6 +7,7 @@
     <title>Upload Student - ESPAM Formation University</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script defer src="{% static 'js/script.js' %}"></script>
 </head>
 <body>
     <div class="dashboard-main">
@@ -24,70 +25,94 @@
             <div class="page-title">
                 <h3>Complete To Upload a Student Information.</h3>
             </div>
+            {% if messages %}
+                        <div class="messages">
+                            {% for message in messages %}
+                            <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} fade show">
+                                <i class="lni {% if message.tags == 'error' %}lni-close{% else %}lni-checkmark{% endif %}"></i>
+                                {{ message }}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        {% endif %}
 
             <div class="upload-content">
-                <div class="photo-upload-section">
-                    <div class="photo-container">
-                        <img id="preview" src="" alt="" />
-                        <div class="upload-overlay">
-                            <i class="lni lni-upload"></i>
-                            <span>UPLOAD A PICTURE</span>
+                <form class="upload-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="row">
+                        <div class="photo-upload-section col-md-6">
+                            <div class="photo-container">
+                                <img id="preview" src="" alt="" />
+                                <div class="upload-overlay">
+                                    <i class="lni lni-upload"></i>
+                                    <span>UPLOAD A PICTURE</span>
+                                </div>
+                                <input type="file" name="photo" id="photo-upload" accept="image/*" class="photo-input" />
+                            </div>
                         </div>
-                        <input type="file" id="photo-upload" accept="image/*" class="photo-input" />
-                    </div>
-                </div>
 
-                <form class="upload-form">
-                    <div class="form-field">
-                        <span class="field-name">Surname:</span>
-                        <input type="text" class="form-input" required>
+                        <div class="col-md-6">
+                            <div class="form-field">
+                                <span class="field-name">Surname:</span>
+                                <input type="text" name="surname" class="form-input" placeholder="Lastname" required>
+                            </div>
+                            <div class="form-field">
+                                <span class="field-name">Other Names:</span>
+                                <input type="text" name="other_names" class="form-input" placeholder="Other Name" required>
+                            </div>
+                            <div class="form-field">
+                                <span class="field-name">Date of Birth:</span>
+                                <input type="date" name="date_of_birth" class="form-input" required>
+                            </div>
+                            <div class="form-field">
+                                <span class="field-name">Level:</span>
+                                <select name="level" class="form-input" required>
+                                    <option value="" disabled selected>Select Level</option>
+                                    <option value="100">100</option>
+                                    <option value="200">200</option>
+                                    <option value="300">300</option>
+                                    <option value="400">400</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <span class="field-name">Department:</span>
+                                <select name="department" class="form-input" required>
+                                    <option value="" disabled selected>Select Department</option>
+                                    <option value="Sociology">Sociology</option>
+                                    <option value="Economics">Economics</option>
+                                    <option value="Political Science">Political Science</option>
+                                    <option value="Computer Science">Computer Science</option>
+                                    <option value="Mass Communication">Mass Communication</option>
+                                    <option value="Accounting & Finance">Accounting & Finance</option>
+                                    <option value="Public Administration">Public Administration</option>
+                                    <option value="Business Administration">Business Administration</option>
+                                    <option value="Human Resource Management">Human Resource Management</option>
+                                    <option value="International Relation & Diplomacy">International Relation & Diplomacy</option>
+                                    <option value="Environmental Health Management">Environmental Health Management</option>
+                                    <option value="Community Health Management">Community Health Management</option>
+                                    <option value="Nursing">Nursing</option>
+                                </select>
+                            </div>
+                            <div class="form-field">
+                                <span class="field-name">Matric Number:</span>
+                                <input type="text" name="matric_number" class="form-input" required
+                                       value="{{ form.data.matric_number|default:'' }}">
+                                
+                                {% if form.matric_number.errors %}
+                                    <div class="form-error">{{ form.matric_number.errors.0 }}</div>
+                                {% endif %}
+                            </div>
+                            <button type="submit" class="submit-btn">
+                                <i class="lni lni-upload"></i> UPLOAD
+                            </button>
+                        </div>
                     </div>
-                    <div class="form-field">
-                        <span class="field-name">Other Names:</span>
-                        <input type="text" class="form-input" required>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Date of Birth:</span>
-                        <input type="date" class="form-input" required>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Level:</span>
-                        <select class="form-input" required>
-                            <option value="" disabled selected>Select Level</option>
-                            <option value="100">100</option>
-                            <option value="200">200</option>
-                            <option value="300">300</option>
-                            <option value="400">400</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Department:</span>
-                        <select class="form-input" required>
-                            <option value="" disabled selected>Select Department</option>
-                            <option value="Sociology">Sociology</option>
-                            <option value="Economics">Economics</option>
-                            <option value="Political Science">Political Science</option>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Mass Communication">Mass Communication</option>
-                            <option value="Accounting & Finance">Accounting & Finance</option>
-                            <option value="Public Administration">Public Administration</option>
-                            <option value="Business Administration">Business Administration</option>
-                            <option value="Human Resource Management">Human Resource Management</option>
-                            <option value="International Relation & Diplomacy">International Relation & Diplomacy</option>
-                            <option value="Environmental Health Management">Environmental Health Management</option>
-                            <option value="Community Health Management">Community Health Management</option>
-                            <option value="Nursing">Nursing</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Matric Number:</span>
-                        <input type="text" class="form-input" required>
-                    </div>
-                    <button type="submit" class="submit-btn">
-                        <i class="lni lni-upload"></i> UPLOAD
-                    </button>
+            
+                    
                 </form>
             </div>
+            
+            
         </main>
 
         <footer class="dashboard-footer">
