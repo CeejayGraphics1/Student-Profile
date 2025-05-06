@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,72 +7,86 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Student Details - ESPAM Formation University</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   </head>
   <body>
     <div class="dashboard-main">
       <nav class="dashboard-nav">
         <div class="dashboard-container">
-          <button class="back-btn">
+          <button class="back-btn" onclick="window.history.back();">
             <i class="lni lni-arrow-left"></i>
           </button>
           <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
-          <img
-            src="{% static 'images/Espam Logo.png' %}"
-            alt="ESPAM Logo"
-            class="nav-logo"
-          />
+          <img src="{% static 'images/Espam Logo.png' %}" alt="ESPAM Logo" class="nav-logo" />
         </div>
       </nav>
 
       <main class="student-details-container">
         <div class="page-title">
-            <h3>This is the Information that was upoaded</h3>
+          <h3>{{ admin_or_staff.first_name }} {{ admin_or_staff.last_name }}'s Information</h3>
         </div>
         <div class="student-details-content">
           <div class="student-fields">
             <div class="field-group">
               <div class="field-label">First Name:</div>
-              <div class="field-value">FOLAKE</div>
+              <div class="field-value">{{ admin_or_staff.first_name }}</div>
             </div>
             <div class="field-group">
               <div class="field-label">Last Name:</div>
-              <div class="field-value">Shirat</div>
+              <div class="field-value">{{ admin_or_staff.last_name }}</div>
             </div>
             <div class="field-group">
               <div class="field-label">Email:</div>
-              <div class="field-value">admin@gmail.com</div>
+              <div class="field-value">{{ admin_or_staff.email }}</div>
             </div>
-            <div class="role-selection">
-                <span class="role-label">Select Role:</span>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" value="staff" id="staffRole" required>
-                    <label class="form-check-label" for="staffRole">STAFF</label>
-                </div>
-                <div class="form-check">
-                    <input class="form-check-input" type="radio" name="role" value="admin" id="adminRole" required>
-                    <label class="form-check-label" for="adminRole">ADMIN</label>
-                </div>
+            <div class="field-group">
+              <div class="field-label">Role:</div>
+              <div class="field-value">{{ admin_or_staff.get_role_display }}</div>
             </div>
-            <div class="student-actions">
-                <button class="action-btn delete-btn">
-                  <i class="lni lni-trash-can"></i>
-                  DELETE
-                </button>
-                  <button class="action-btn filter-btn">
-                    <i class="lni lni-pencil"></i>
-                    MODIFY
-                  </button>
-              </div>
           </div>
         </div>
 
-        
+        <div class="student-actions">
+          <!-- Delete Button -->
+          <button class="action-btn delete-btn" data-bs-toggle="modal" data-bs-target="#deleteConfirmationModal">
+            <i class="lni lni-trash-can"></i>
+            DELETE
+          </button>
+          <button class="action-btn filter-btn">
+            <i class="lni lni-pencil"></i>
+            MODIFY
+          </button>
+        </div>
       </main>
+
+      <!-- Modal for Delete Confirmation -->
+      <div class="modal fade" id="deleteConfirmationModal" tabindex="-1" aria-labelledby="deleteConfirmationLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="deleteConfirmationLabel">Confirm Deletion</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              Are you sure you want to delete {{ admin_or_staff.first_name }} {{ admin_or_staff.last_name }}'s details from the system? This action cannot be undone.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+              <form action="{% url 'delete_admin_or_staff' admin_or_staff.id %}" method="POST">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <footer class="dashboard-footer">
         <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
       </footer>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   </body>
 </html>

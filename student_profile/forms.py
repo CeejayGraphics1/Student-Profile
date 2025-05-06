@@ -1,0 +1,31 @@
+from django import forms
+from .models import AdminStaff
+
+class AdminStaffForm(forms.ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={
+        'class': 'form-control',
+        'placeholder': 'Password'
+    }))
+
+    class Meta:
+        model = AdminStaff
+        fields = ['title', 'first_name', 'last_name', 'email', 'role', 'password']
+        widgets = {
+            'title': forms.Select(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'First Name'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Last Name'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'Email'}),
+            'role': forms.RadioSelect(attrs={'class': 'form-check-input'})
+        }
+
+class ModifyMemberForm(forms.ModelForm):
+    class Meta:
+        model = AdminStaff
+        fields = ['title', 'first_name', 'last_name', 'email', 'role']
+        widgets = {
+            'title': forms.Select(attrs={'class': 'form-control'}),
+            'first_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'last_name': forms.TextInput(attrs={'class': 'form-control'}),
+            'email': forms.EmailInput(attrs={'class': 'form-control'}),
+            'role': forms.RadioSelect(attrs={'class': 'form-check-input'})
+        }
