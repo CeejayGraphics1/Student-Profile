@@ -89,9 +89,14 @@
                 <!-- Loop through students based on level -->
                 {% if level == 100 %}
                     {% for student in students_by_level.100 %}
+                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
                         <div class="student-card">
                             <div class="student-info">
-                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                              {% if student.photo %}
+                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
+                              {% else %}
+                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
+                              {% endif %}
                                 <div class="student-details">
                                     <h3>{{ student.surname }} {{ student.other_names }}</h3>
                                     <p>Date of Birth: {{ student.date_of_birth }}</p>
@@ -103,12 +108,18 @@
                                 <input type="checkbox" class="student-checkbox" />
                             </div>
                         </div>
+                      </a>
                     {% endfor %}
                 {% elif level == 200 %}
                     {% for student in students_by_level.200 %}
+                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
                         <div class="student-card">
                             <div class="student-info">
-                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                              {% if student.photo %}
+                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
+                              {% else %}
+                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
+                              {% endif %}
                                 <div class="student-details">
                                     <h3>{{ student.surname }} {{ student.other_names }}</h3>
                                     <p>Date of Birth: {{ student.date_of_birth }}</p>
@@ -120,12 +131,18 @@
                                 <input type="checkbox" class="student-checkbox" />
                             </div>
                         </div>
+                    </a>
                     {% endfor %}
                 {% elif level == 300 %}
                     {% for student in students_by_level.300 %}
+                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
                         <div class="student-card">
                             <div class="student-info">
-                                <img src="{% static 'images/student1.jpg' %}" alt="" class="student-image" />
+                              {% if student.photo %}
+                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
+                              {% else %}
+                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
+                              {% endif %}
                                 <div class="student-details">
                                     <h3>{{ student.surname }} {{ student.other_names }}</h3>
                                     <p>Date of Birth: {{ student.date_of_birth }}</p>
@@ -137,6 +154,7 @@
                                 <input type="checkbox" class="student-checkbox" />
                             </div>
                         </div>
+                    </a>
                     {% endfor %}
                 {% endif %}
             </div>

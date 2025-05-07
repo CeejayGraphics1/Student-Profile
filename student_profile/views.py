@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required, permission_required
@@ -56,8 +56,23 @@ def view_students(request):
 
     return render(request, 'view_student.html', context)
 
-def student_details(request):
-    return render(request, 'student_details.html')
+def delete_student(request, id):
+    student = get_object_or_404(Student, id=id)
+    
+    if request.method == 'POST':
+        # Perform the deletion
+        student.delete()
+        return redirect('view_students') 
+    
+    return HttpResponse("Method not allowed", status=405)
+
+def student_details(request, id):
+    student = get_object_or_404(Student, pk=id)
+    
+    context = {
+        'student': student,
+    }
+    return render(request, 'student_details.html', context)
 
 def upload(request):
     if request.method == 'POST':
