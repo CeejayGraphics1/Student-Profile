@@ -530,11 +530,11 @@ body::before {
 
 .level-header {
   position: sticky;
-  top: 100px;
+  top: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 2rem; /* Reduced from 1rem */
+  padding: 0.5rem 2rem;
   background-color: #fff;
   z-index: 99;
   border-bottom: 1px solid rgba(42, 27, 109, 0.1);
@@ -1477,6 +1477,34 @@ close-menu:hover {
 
 .photo-upload-section {
   flex: 0 0 400px;
+}
+
+.photo-container {
+  position: relative;
+}
+
+.photo-checkbox-wrapper {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.photo-checkbox-label {
+  font-size: 14px;
+  color: #333;
+  margin: 0;
+  cursor: pointer;
+}
+
+.photo-container {
+  position: relative;
 }
 
 .photo-container {

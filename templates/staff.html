@@ -37,34 +37,39 @@
                 <button class="admin-btn view-btn" onclick="window.location.href='{% url 'profile' %}'">
                   MY PROFILE
                 </button>
-                <button class="admin-btn view-btn bg-danger">
+                <form
+                  action="{% url 'logout' %}"
+                  method="POST"
+                  style="display: inline"
+                >
+                  {% csrf_token %}
+                  <button class="admin-btn view-btn bg-danger w-100">
                     LOGOUT
                 </button>
+                </form>
               </div>
               <ul class="dept-list">
-                <li>SOCIOLOGY</li>
-                <li>ECONOMICS</li>
-                <li>POLITICAL SCIENCE</li>
-                <li>COMPUTER SCIENCE</li>
-                <li>MASS COMMUNICATION</li>
-                <li>ACCOUNTING & FINANCE</li>
-                <li>PUBLIC ADMINISTRATION</li>
-                <li>BUSSINESS ADMINSTRATION</li>
-                <li>HUMAN RESOURCE MANAGEMENT</li>
-                <li>INTERNATIONAL RELATION & DIPLOMACY</li>
-                <li>ENVIRONMENTAL HEALTH MANAGEMENT</li>
-                <li>COMMUNITY HEALTH MANAGEMENT</li>
-                <li>NURSING</li>
+                <li><a href="{% url 'staff_view_students' %}">ALL DEPARTMENT</a></li>
+                {% for dept in departments %}
+                <li>
+                  <a href="{% url 'staff_view_students' %}?department={{ dept }}">{{ dept }}</a>
+                </li>
+                {% endfor %}
               </ul>
             </div>
           </div>
-          <div class="dashboard-search">
+          <form
+            action="{% url 'staff_search_students' %}"
+            method="GET"
+            class="dashboard-search"
+          >
             <input
               type="search"
+              name="term"
               placeholder="Search for a student in ESPAM FORMATION UNIVERSITY..."
               class="dashboard-search-input"
             />
-          </div>
+          </form>
         </div>
       </nav>
 

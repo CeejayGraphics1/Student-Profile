@@ -160,4 +160,69 @@ setTimeout(function() {
     alerts.forEach(alert => alert.style.display = 'none');
 }, 3000);
 
+// Add event listener for staff search
+document.addEventListener('DOMContentLoaded', function() {
+    const searchInput = document.getElementById('searchInput');
+    const searchResults = document.getElementById('searchResults');
+    let debounceTimer;
+
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            clearTimeout(debounceTimer);
+            const searchTerm = this.value.trim();
+            
+            if (searchTerm.length < 2) {
+                searchResults.style.display = 'none';
+                return;
+            }
+
+            debounceTimer = setTimeout(() => {
+                fetch(`/search_students/?term=${encodeURIComponent(searchTerm)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.results.length) {
+                            const studentsByLevel = {};
+                            data.results.forEach(student => {
+                                if (!studentsByLevel[student.level]) {
+                                    studentsByLevel[student.level] = [];
+                                }
+                                studentsByLevel[student.level].push(student);
+                            });
+
+                            searchResults.innerHTML = '';
+                            Object.keys(studentsByLevel).forEach(level => {
+                                const levelSection = document.createElement('div');
+                                levelSection.innerHTML = `
+                                    <div class="search-level-header">Level ${level}</div>
+                                    <div class="search-student-list">
+                                        ${studentsByLevel[level].map(student => `
+                                            <a href="/staff_student_details/${student.id}/" class="search-student-item">
+                                                <img src="${student.photo || '/static/images/default.jpg'}" alt="${student.surname}'s photo" />
+                                                <div>
+                                                    <div class="student-name">${student.surname} ${student.other_names}</div>
+                                                    <div class="student-info">
+                                                        ${student.matric_number} - ${student.department}
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        `).join('')}
+                                    </div>
+                                `;
+                                searchResults.appendChild(levelSection);
+                            });
+                            searchResults.style.display = 'block';
+                        } else {
+                            searchResults.innerHTML = `
+                                <div class="no-results">
+                                    <p>No students found matching "${searchTerm}"</p>
+                                </div>
+                            `;
+                            searchResults.style.display = 'block';
+                        }
+                    });
+            }, 300);
+        });
+    }
+});
+
 

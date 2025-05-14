@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Filter Student Details - ESPAM Formation University</title>
+    <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <script defer src="{% static 'js/script.js' %}"></script>
+  </head>
+  <body>
+    <div class="dashboard-main">
+      <nav class="dashboard-nav">
+        <div class="dashboard-container">
+          <button class="back-btn" onclick="window.history.back();">
+            <i class="lni lni-arrow-left"></i>
+          </button>
+          <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
+          <img
+            src="{% static 'images/Espam Logo.png' %}"
+            alt="ESPAM Logo"
+            class="nav-logo"
+          />
+        </div>
+      </nav>
+
+      <main class="student-details-container">
+        <div class="page-title">
+          <h3>Filter Student Details</h3>
+        </div>
+        <div class="student-details-content">
+          <div class="photo-upload-section">
+            <div class="photo-container">
+              <div class="photo-checkbox-wrapper">
+                <input
+                  type="checkbox"
+                  class="detail-checkbox"
+                  value="photo"
+                  id="photoCheckbox"
+                />
+              </div>
+              {% if student.photo %}
+              <img
+                src="{{ student.photo.url }}"
+                alt="{{ student.surname }}'s photo"
+                class="student-image"
+              />
+              {% else %}
+              <img
+                src="{% static 'images/images.jpeg' %}"
+                alt="Default photo"
+                class="student-image"
+              />
+              {% endif %}
+            </div>
+          </div>
+          <div class="student-fields">
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">                        
+                        Surname:
+                    </div>
+                    <div class="field-value">{{ student.surname }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input
+                  type="checkbox"
+                  class="detail-checkbox"
+                  value="surname" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"
+                /></div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">
+                        
+                        Other Names:
+                    </div>
+                    <div class="field-value">{{ student.other_names }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input
+                        type="checkbox"
+                        class="detail-checkbox"
+                        value="other_names" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"
+                        />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">
+                        
+                        Date of Birth:
+                    </div>
+                    <div class="field-value">{{ student.date_of_birth }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input
+                        type="checkbox"
+                        class="detail-checkbox"
+                        value="date_of_birth" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"
+                        />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">
+                        
+                        Level:
+                    </div>
+                    <div class="field-value">{{ student.level }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="checkbox" class="detail-checkbox" value="level" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"/>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">
+                        
+                        Department:
+                    </div>
+                    <div class="field-value">{{ student.department }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input
+                        type="checkbox"
+                        class="detail-checkbox"
+                        value="department" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"
+                        />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="field-group" style="width: 350px; max-width: 100%;">
+                    <div class="field-label">
+                        Matric Number:
+                    </div>
+                    <div class="field-value">{{ student.matric_number }}</div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input
+                        type="checkbox"
+                        class="detail-checkbox"
+                        value="matric_number" style="margin-top: 0.8rem; width: 1rem; height: 1rem;"
+                        />
+                </div>
+            </div>
+            
+            <div class="student-actions">
+              <div class="action-right">
+                <button
+                  onclick="exportFilteredDetails()"
+                  class="action-btn export-btn"
+                >
+                  <i class="lni lni-download"></i>
+                  EXPORT
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer class="dashboard-footer">
+        <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
+      </footer>
+    </div>
+
+    <script>
+      function exportFilteredDetails() {
+        const selectedFields = Array.from(
+          document.querySelectorAll(".detail-checkbox:checked")
+        ).map((checkbox) => checkbox.value);
+
+        if (selectedFields.length === 0) {
+          alert("Please select at least one field to export");
+          return;
+        }
+
+        window.location.href = `{% url 'export_filtered_pdf' student.id %}?fields=${selectedFields.join(
+          ","
+        )}`;
+      }
+    </script>
+  </body>
+</html>

@@ -10,6 +10,18 @@ from django.db.models import Q
 
 from .forms import StudentForm
 
+from django.conf import settings
+from io import BytesIO
+from reportlab.pdfgen import canvas
+from reportlab.lib.pagesizes import A4
+from reportlab.lib import colors
+from reportlab.lib.units import inch
+from django.http import HttpResponse
+from PIL import Image
+import os
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+
 # Add a custom decorator to check if user is admin
 def admin_required(view_func):
     def wrap(request, *args, **kwargs):
@@ -43,10 +55,8 @@ def user_login(request):
             if user is not None:
                 login(request, user)
                 if user.role == 'admin':
-                    messages.success(request, f'Welcome {user.title} {user.first_name}!')
                     return redirect('dashboard')
                 else:
-                    messages.success(request, f'Welcome {user.title} {user.first_name}!')
                     return redirect('staff')
             else:
                 messages.error(request, 'Invalid email or password')
@@ -254,24 +264,46 @@ def delete_admin_or_staff(request, id):
 @login_required
 @staff_required
 def staff(request):
-    return render(request, 'staff.html')
+    departments = [
+        'SOCIOLOGY', 'ECONOMICS', 'POLITICAL SCIENCE', 'COMPUTER SCIENCE',
+        'MASS COMMUNICATION', 'ACCOUNTING & FINANCE', 'PUBLIC ADMINISTRATION',
+        'BUSSINESS ADMINSTRATION', 'HUMAN RESOURCE MANAGEMENT',
+        'INTERNATIONAL RELATION & DIPLOMACY', 'ENVIRONMENTAL HEALTH MANAGEMENT',
+        'COMMUNITY HEALTH MANAGEMENT', 'NURSING'
+    ]
+    context = {
+        'user': request.user,
+        'departments': departments
+    }
+    return render(request, 'staff.html', context)
 
 @login_required
-@staff_required
 def staff_view_students(request):
-    # Add the same student grouping logic as in admin view
-    students_by_level = {
-        100: Student.objects.filter(level='100'),
-        200: Student.objects.filter(level='200'),
-        300: Student.objects.filter(level='300')
-    }
-
-    levels = [100, 200, 300]
+    selected_dept = request.GET.get('department')
+    
+    students_by_level = {}
+    levels = [100, 200, 300]  # Changed to integers
+    
+    for level in levels:
+        query = Q(level=str(level))  # Convert to string for database query
+        if selected_dept:
+            query &= Q(department=selected_dept)
+        students = Student.objects.filter(query).order_by('surname')
+        students_by_level[level] = students
 
     context = {
-        'students_by_level': students_by_level,
         'levels': levels,
+        'students_by_level': students_by_level,
+        'selected_dept': selected_dept,
+        'departments': [  # Add departments list
+            'SOCIOLOGY', 'ECONOMICS', 'POLITICAL SCIENCE', 'COMPUTER SCIENCE',
+            'MASS COMMUNICATION', 'ACCOUNTING & FINANCE', 'PUBLIC ADMINISTRATION',
+            'BUSSINESS ADMINSTRATION', 'HUMAN RESOURCE MANAGEMENT',
+            'INTERNATIONAL RELATION & DIPLOMACY', 'ENVIRONMENTAL HEALTH MANAGEMENT',
+            'COMMUNITY HEALTH MANAGEMENT', 'NURSING'
+        ]
     }
+    
     return render(request, 'staff-view-students.html', context)
 
 @login_required
@@ -282,6 +314,43 @@ def staff_student_details(request, id):
         'student': student,
     }
     return render(request, 'staff-student-details.html', context)
+
+@login_required
+@staff_required
+def staff_search_students(request):
+    search_term = request.GET.get('term', '')
+    if search_term:
+        # Enhanced search query
+        students = Student.objects.filter(
+            Q(surname__icontains=search_term) |
+            Q(other_names__icontains=search_term) |
+            Q(matric_number__icontains=search_term) |
+            Q(department__icontains=search_term) |
+            Q(level__icontains=search_term)  # Added level search
+        ).order_by('level', 'surname')
+
+        students_by_level = {}
+        levels = [100, 200, 300]
+        
+        for level in levels:
+            students_by_level[level] = students.filter(level=str(level))
+
+        context = {
+            'levels': levels,
+            'students_by_level': students_by_level,
+            'is_search': True,
+            'search_term': search_term,
+            'departments': [
+                'SOCIOLOGY', 'ECONOMICS', 'POLITICAL SCIENCE', 'COMPUTER SCIENCE',
+                'MASS COMMUNICATION', 'ACCOUNTING & FINANCE', 'PUBLIC ADMINISTRATION',
+                'BUSSINESS ADMINSTRATION', 'HUMAN RESOURCE MANAGEMENT',
+                'INTERNATIONAL RELATION & DIPLOMACY', 'ENVIRONMENTAL HEALTH MANAGEMENT',
+                'COMMUNITY HEALTH MANAGEMENT', 'NURSING'
+            ]
+        }
+        return render(request, 'staff-view-students.html', context)
+    
+    return redirect('staff_view_students')
 
 @login_required
 @staff_required
@@ -335,3 +404,242 @@ def search_students(request):
     }
     
     return render(request, 'view_student.html', context)
+
+def export_student_pdf(request, id):
+    # Get student
+    student = get_object_or_404(Student, pk=id)
+    
+    # Create response object
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="student_{student.matric_number}.pdf"'
+    
+    # Create PDF object
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+    
+    # Add logo
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'Espam Logo.png')
+    if os.path.exists(logo_path):
+        p.drawImage(logo_path, width/2 - 50, height - 150, width=100, height=100)
+    
+    # Add header text
+    p.setFont("Helvetica-Bold", 16)
+    p.drawCentredString(width/2, height - 180, "ESPAM FORMATION UNIVERSITY")
+    
+    p.setFont("Helvetica", 10)
+    p.drawCentredString(width/2, height - 200, "Address: Sacouba Anavie Campus, Porto-Novo, Republic of Benin.")
+    p.drawCentredString(width/2, height - 220, "Phone: +22946436904, +2348035637035, +22956885802")
+    p.drawCentredString(width/2, height - 240, "Email: espamformationunicampus2@gmail.com")
+    
+    # Add title
+    p.setFont("Helvetica-Bold", 14)
+    p.drawCentredString(width/2, height - 280, "STUDENT PROFILE REPORT")
+    
+    # Draw line under title
+    p.line(50, height - 290, width - 50, height - 290)
+    
+    # Add student photo
+    if student.photo:
+        try:
+            photo_path = student.photo.path
+            p.drawImage(photo_path, 50, height - 450, width=120, height=120)
+        except:
+            pass  # Skip if photo can't be loaded
+    
+    # Add student details
+    p.setFont("Helvetica-Bold", 12)
+    start_y = height - 350
+    details = [
+        f"Surname: {student.surname}",
+        f"Other Names: {student.other_names}",
+        f"Matric Number: {student.matric_number}",
+        f"Date of Birth: {student.date_of_birth}",
+        f"Level: {student.level}",
+        f"Department: {student.department}"
+    ]
+    
+    for i, detail in enumerate(details):
+        p.drawString(200, start_y - (i * 25), detail)
+    
+    # Add footer with standard Helvetica font
+    p.setFont("Helvetica", 8)
+    p.drawCentredString(width/2, 30, "All rights reserved by ESPAM FORMATION UNIVERSITY.")
+    
+    # Save PDF
+    p.showPage()
+    p.save()
+    
+    # Get the value of the BytesIO buffer and write it to the response
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    
+    return response
+
+def export_students_pdf(request):
+    # Get selected student IDs from query parameter
+    student_ids = request.GET.get('ids', '').split(',')
+    students = Student.objects.filter(id__in=student_ids).order_by('level', 'surname')
+    
+    if not students:
+        return HttpResponse("No students selected", status=400)
+    
+    # Create response object
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="selected_students.pdf"'
+    
+    # Create PDF object
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+    
+    # Add logo and header (same as single student export)
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'Espam Logo.png')
+    if os.path.exists(logo_path):
+        p.drawImage(logo_path, width/2 - 50, height - 150, width=100, height=100)
+    
+    # Add header text
+    p.setFont("Helvetica-Bold", 16)
+    p.drawCentredString(width/2, height - 180, "ESPAM FORMATION UNIVERSITY")
+    
+    p.setFont("Helvetica", 10)
+    p.drawCentredString(width/2, height - 200, "Address: Sacouba Anavie Campus, Porto-Novo, Republic of Benin.")
+    p.drawCentredString(width/2, height - 220, "Phone: +22946436904, +2348035637035, +22956885802")
+    p.drawCentredString(width/2, height - 240, "Email: espamformationunicampus2@gmail.com")
+    
+    # Add title
+    p.setFont("Helvetica-Bold", 14)
+    p.drawCentredString(width/2, height - 280, "STUDENT PROFILES REPORT")
+    
+    # Initialize starting position
+    y_position = height - 320
+    
+    # Loop through each student
+    for student in students:
+        # Check if we need a new page
+        if y_position < 150:
+            p.showPage()
+            y_position = height - 100
+        
+        # Draw line above each student (except first one)
+        if y_position < height - 320:
+            p.line(50, y_position + 30, width - 50, y_position + 30)
+            y_position -= 20
+        
+        # Add student photo
+        if student.photo:
+            try:
+                photo_path = student.photo.path
+                p.drawImage(photo_path, 50, y_position - 100, width=100, height=100)
+            except:
+                pass
+        
+        # Add student details
+        p.setFont("Helvetica-Bold", 12)
+        details = [
+            f"Surname: {student.surname}",
+            f"Other Names: {student.other_names}",
+            f"Matric Number: {student.matric_number}",
+            f"Date of Birth: {student.date_of_birth}",
+            f"Level: {student.level}",
+            f"Department: {student.department}"
+        ]
+        
+        for i, detail in enumerate(details):
+            p.drawString(200, y_position - (i * 20), detail)
+        
+        # Update position for next student
+        y_position -= 150
+    
+    # Add footer
+    p.setFont("Helvetica", 8)
+    p.drawCentredString(width/2, 30, "All rights reserved by ESPAM FORMATION UNIVERSITY.")
+    
+    # Save PDF
+    p.showPage()
+    p.save()
+    
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    
+    return response
+
+@login_required
+@admin_required
+def filter_student(request, id):
+    student = get_object_or_404(Student, pk=id)
+    return render(request, 'filter_student.html', {'student': student})
+
+def export_filtered_pdf(request, id):
+    student = get_object_or_404(Student, pk=id)
+    selected_fields = request.GET.get('fields', '').split(',')
+    
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = f'attachment; filename="student_{student.matric_number}_filtered.pdf"'
+    
+    # Create PDF object
+    buffer = BytesIO()
+    p = canvas.Canvas(buffer, pagesize=A4)
+    width, height = A4
+    
+    # Add header
+    logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'Espam Logo.png')
+    if os.path.exists(logo_path):
+        p.drawImage(logo_path, width/2 - 50, height - 150, width=100, height=100)
+    
+    # Add header text
+    p.setFont("Helvetica-Bold", 16)
+    p.drawCentredString(width/2, height - 180, "ESPAM FORMATION UNIVERSITY")
+    
+    p.setFont("Helvetica", 10)
+    p.drawCentredString(width/2, height - 200, "Address: Sacouba Anavie Campus, Porto-Novo, Republic of Benin.")
+    p.drawCentredString(width/2, height - 220, "Phone: +22946436904, +2348035637035, +22956885802")
+    p.drawCentredString(width/2, height - 240, "Email: espamformationunicampus2@gmail.com")
+    
+    # Draw line under header
+    p.line(50, height - 290, width - 50, height - 290)
+    
+    # Add title
+    p.setFont("Helvetica-Bold", 14)
+    p.drawCentredString(width/2, height - 280, "STUDENT PROFILE REPORT")
+    
+    # Add student photo if selected
+    start_y = height - 350
+    if 'photo' in selected_fields and student.photo:
+        try:
+            photo_path = student.photo.path
+            p.drawImage(photo_path, 50, height - 450, width=120, height=120)
+        except:
+            pass
+    
+    # Add selected student details
+    p.setFont("Helvetica-Bold", 12)
+    field_mapping = {
+        'surname': ('Surname', student.surname),
+        'other_names': ('Other Names', student.other_names),
+        'date_of_birth': ('Date of Birth', student.date_of_birth),
+        'level': ('Level', student.level),
+        'department': ('Department', student.department),
+        'matric_number': ('Matric Number', student.matric_number),
+    }
+    
+    for i, field in enumerate(selected_fields):
+        if field in field_mapping and field != 'photo':
+            label, value = field_mapping[field]
+            p.drawString(200, start_y - (i * 25), f"{label}: {value}")
+    
+    # Add footer
+    p.setFont("Helvetica", 8)
+    p.drawCentredString(width/2, 30, "All rights reserved by ESPAM FORMATION UNIVERSITY.")
+    
+    # Save PDF
+    p.showPage()
+    p.save()
+    
+    pdf = buffer.getvalue()
+    buffer.close()
+    response.write(pdf)
+    
+    return response
