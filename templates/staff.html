@@ -34,7 +34,7 @@
                 </button>
               </div>
               <div class="admin-buttons">
-                <button class="admin-btn view-btn">
+                <button class="admin-btn view-btn" onclick="window.location.href='{% url 'profile' %}'">
                   MY PROFILE
                 </button>
                 <button class="admin-btn view-btn bg-danger">
@@ -70,7 +70,7 @@
 
       <div class="content-wrapper">
         <div class="text-center pt-5">
-          <h1 class="welcome-text display-4">WELCOME TO</h1>
+          <h1 class="welcome-text display-4"><span class="text-danger">{{ user.title|upper }} {{ user.first_name|upper }}, </span>WELCOME TO</h1>
           <div class="university-name mb-4">ESPAM FORMATION UNIVERISTY</div>
           <h2 class="student-text">STUDENT IDENTITY WEBSITE</h2>
         </div>

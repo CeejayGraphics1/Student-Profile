@@ -1,4 +1,4 @@
-{% load static %}
+{% load static %} {% load custom_filters %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -33,41 +33,129 @@
                 </button>
               </div>
               <div class="admin-buttons">
-                <button class="admin-btn view-btn" onclick="window.location.href='{% url 'view_admin' %}'">
+                <button
+                  class="admin-btn view-btn"
+                  onclick="window.location.href='{% url 'view_admin' %}'"
+                >
                   VIEW STAFF/ADMIN IN THE SYSTEM
                 </button>
-                <button class="admin-btn add-btn" onclick="window.location.href='{% url 'upload_admin' %}'">
+                <button
+                  class="admin-btn add-btn"
+                  onclick="window.location.href='{% url 'upload_admin' %}'"
+                >
                   ADD STAFF OR ADMIN
                 </button>
-                <button class="admin-btn view-btn bg-danger">
-                    LOGOUT
+                <button
+                  class="admin-btn view-btn bg-danger"
+                  onclick="window.location.href='{% url 'logout' %}'"
+                >
+                  LOGOUT
                 </button>
               </div>
               <ul class="dept-list">
-                <li>SOCIOLOGY</li>
-                <li>ECONOMICS</li>
-                <li>POLITICAL SCIENCE</li>
-                <li>COMPUTER SCIENCE</li>
-                <li>MASS COMMUNICATION</li>
-                <li>ACCOUNTING & FINANCE</li>
-                <li>PUBLIC ADMINISTRATION</li>
-                <li>BUSSINESS ADMINSTRATION</li>
-                <li>HUMAN RESOURCE MANAGEMENT</li>
-                <li>INTERNATIONAL RELATION & DIPLOMACY</li>
-                <li>ENVIRONMENTAL HEALTH MANAGEMENT</li>
-                <li>COMMUNITY HEALTH MANAGEMENT</li>
-                <li>NURSING</li>
+                <li>
+                  <a href="{% url 'view_students' %}">ALL DEPARTMENT</a>
+                </li>
+                <li>
+                  <a href="{% url 'view_students' %}?department=SOCIOLOGY"
+                    >SOCIOLOGY</a
+                  >
+                </li>
+                <li>
+                  <a href="{% url 'view_students' %}?department=ECONOMICS"
+                    >ECONOMICS</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=POLITICAL_SCIENCE"
+                    >POLITICAL SCIENCE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=COMPUTER_SCIENCE"
+                    >COMPUTER SCIENCE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=MASS_COMMUNICATION"
+                    >MASS COMMUNICATION</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=ACCOUNTING_FINANCE"
+                    >ACCOUNTING & FINANCE</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=PUBLIC_ADMINISTRATION"
+                    >PUBLIC ADMINISTRATION</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=BUSINESS_ADMINISTRATION"
+                    >BUSINESS ADMINISTRATION</a
+                  >
+                </li>
+                <li>
+                  <a href="{% url 'view_students' %}?department=HUMAN_RESOURCE"
+                    >HUMAN RESOURCE MANAGEMENT</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=INTERNATIONAL_RELATIONS"
+                    >INTERNATIONAL RELATION & DIPLOMACY</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=ENVIRONMENTAL_HEALTH"
+                    >ENVIRONMENTAL HEALTH MANAGEMENT</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="{% url 'view_students' %}?department=COMMUNITY_HEALTH"
+                    >COMMUNITY HEALTH MANAGEMENT</a
+                  >
+                </li>
+                <li>
+                  <a href="{% url 'view_students' %}?department=NURSING"
+                    >NURSING</a
+                  >
+                </li>
               </ul>
             </div>
           </div>
-          <div class="dashboard-search">
+          <form
+            action="{% url 'search_students' %}"
+            method="GET"
+            class="dashboard-search"
+          >
             <input
               type="search"
+              name="term"
               placeholder="Search for a student in ESPAM FORMATION UNIVERSITY..."
               class="dashboard-search-input"
             />
-          </div>
-          <button class="dashboard-upload" onclick="window.location.href='{% url 'upload' %}'">
+          </form>
+          <button
+            class="dashboard-export"
+            onclick="window.location.href='{% url 'upload' %}'"
+          >
+            <i class="lni lni-download"></i>
+            EXPORT
+          </button>
+          <button
+            class="dashboard-upload"
+            onclick="window.location.href='{% url 'upload' %}'"
+          >
             <i class="lni lni-upload"></i>
             UPLOAD
           </button>
@@ -76,95 +164,77 @@
 
       <main class="student-list-wrapper">
         <div class="department-header">
-            <h2 class="department-title">Computer Science Department</h2>
+          <h2 class="department-title">
+            {% if is_search %}
+              Search Results for "{{ search_term }}"
+            {% elif selected_dept %}
+              {{ department_name }}
+            {% else %}
+              All Departments
+            {% endif %}
+          </h2>
         </div>
-    
+
+
         {% for level in levels %}
-        <div class="level-section">
+          <div class="level-section">
             <div class="level-header">
-                <span class="level-tag">{{ level }}L</span>
-                <button class="select-all-btn">SELECT ALL</button>
+              <span class="level-tag">{{ level }}L</span>
+              <button onclick="toggleAll('{{ level }}')" class="select-all-btn">
+                SELECT ALL
+              </button>
             </div>
+
             <div class="student-list">
-                <!-- Loop through students based on level -->
-                {% if level == 100 %}
-                    {% for student in students_by_level.100 %}
-                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
-                        <div class="student-card">
-                            <div class="student-info">
-                              {% if student.photo %}
-                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
-                              {% else %}
-                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
-                              {% endif %}
-                                <div class="student-details">
-                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
-                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
-                                    <p>Level: {{ student.level }}</p>
-                                    <p>Department: Computer Science</p>
-                                </div>
-                            </div>
-                            <div class="student-select">
-                                <input type="checkbox" class="student-checkbox" />
-                            </div>
+              {% with level_students=students_by_level|get_item:level %}
+                {% if level_students %}
+                  {% for student in level_students %}
+                    <div class="student-card">
+                      <a href="{% url 'student_details' student.id %}" class="student-info text-decoration-none">
+                        {% if student.photo %}
+                          <img
+                            src="{{ student.photo.url }}"
+                            alt="{{ student.surname }}'s photo"
+                            class="student-image"
+                          />
+                        {% else %}
+                          <img
+                            src="{% static 'images/images.jpeg' %}"
+                            alt="Default photo"
+                            class="student-image"
+                          />
+                        {% endif %}
+                        <div class="student-details">
+                          <h3>{{ student.surname }} {{ student.other_names }}</h3>
+                          <p>Matric Number: {{ student.matric_number }}</p>
+                          <p>Level: {{ student.level }}L</p>
+                          <p>Department: {{ student.department }}</p>
                         </div>
                       </a>
-                    {% endfor %}
-                {% elif level == 200 %}
-                    {% for student in students_by_level.200 %}
-                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
-                        <div class="student-card">
-                            <div class="student-info">
-                              {% if student.photo %}
-                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
-                              {% else %}
-                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
-                              {% endif %}
-                                <div class="student-details">
-                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
-                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
-                                    <p>Level: {{ student.level }}</p>
-                                    <p>Department: Computer Science</p>
-                                </div>
-                            </div>
-                            <div class="student-select">
-                                <input type="checkbox" class="student-checkbox" />
-                            </div>
-                        </div>
-                    </a>
-                    {% endfor %}
-                {% elif level == 300 %}
-                    {% for student in students_by_level.300 %}
-                    <a href="{% url 'student_details' student.id %}" class="text-decoration-none">
-                        <div class="student-card">
-                            <div class="student-info">
-                              {% if student.photo %}
-                              <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" width="100" class="student-image">
-                              {% else %}
-                              <img src="{% static 'images/images.jpeg' %}" alt="{{ student.surname }}'s photo" width="100" class="student-image"> 
-                              {% endif %}
-                                <div class="student-details">
-                                    <h3>{{ student.surname }} {{ student.other_names }}</h3>
-                                    <p>Date of Birth: {{ student.date_of_birth }}</p>
-                                    <p>Level: {{ student.level }}</p>
-                                    <p>Department: Computer Science</p>
-                                </div>
-                            </div>
-                            <div class="student-select">
-                                <input type="checkbox" class="student-checkbox" />
-                            </div>
-                        </div>
-                    </a>
-                    {% endfor %}
+                      <div class="student-select">
+                        <input
+                          type="checkbox"
+                          class="student-checkbox level-{{ level }}"
+                          value="{{ student.id }}"
+                        />
+                      </div>
+                    </div>
+                  {% endfor %}
+                {% else %}
+                  <div class="no-students">
+                    {% if is_search %}
+                      <p>No students found in {{ level }}L matching "{{ search_term }}"</p>
+                    {% else %}
+                      <p>No students found in {{ level }}L</p>
+                    {% endif %}
+                  </div>
                 {% endif %}
+              {% endwith %}
             </div>
-        </div>
+          </div>
         {% endfor %}
-    </main>
-   
-   
-   
-    
+
+      </main>
 
       <footer class="dashboard-footer">
         <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
@@ -172,5 +242,50 @@
     </div>
 
     <script src="{% static 'js/script.js' %}"></script>
+    <script>
+      function toggleAll(level) {
+          const checkboxes = document.querySelectorAll(`.student-checkbox.level-${level}`);
+          const button = event.target;
+          const isSelecting = button.textContent === 'SELECT ALL';
+          
+          checkboxes.forEach(checkbox => {
+              checkbox.checked = isSelecting;
+          });
+          
+          button.textContent = isSelecting ? 'DESELECT ALL' : 'SELECT ALL';
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+          // Handle individual checkbox clicks
+          document.querySelectorAll('.student-card').forEach(card => {
+              const checkbox = card.querySelector('.student-checkbox');
+              const studentInfo = card.querySelector('.student-info');
+              
+              // Handle checkbox click
+              checkbox.addEventListener('click', function(e) {
+                  e.stopPropagation();
+                  // Don't need to manually toggle - let default behavior work
+              });
+              
+              // Prevent student info link from interfering with checkbox
+              studentInfo.addEventListener('click', function(e) {
+                  if (e.target.closest('.student-select')) {
+                      e.preventDefault();
+                  }
+              });
+          });
+
+          // Update Select All button when individual checkboxes change
+          document.querySelectorAll('.student-checkbox').forEach(checkbox => {
+              checkbox.addEventListener('change', function() {
+                  const level = this.classList[1].split('-')[1];
+                  const levelCheckboxes = document.querySelectorAll(`.student-checkbox.level-${level}`);
+                  const allChecked = Array.from(levelCheckboxes).every(cb => cb.checked);
+                  const button = document.querySelector(`button[onclick="toggleAll('${level}')"]`);
+                  button.textContent = allChecked ? 'DESELECT ALL' : 'SELECT ALL';
+              });
+          });
+      });
+    </script>
   </body>
 </html>

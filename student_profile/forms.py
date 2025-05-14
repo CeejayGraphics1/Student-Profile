@@ -40,6 +40,7 @@ class StudentForm(forms.ModelForm):
 
     def clean_matric_number(self):
         matric_number = self.cleaned_data.get('matric_number')
-        if Student.objects.filter(matric_number=matric_number).exists():
+        # Check if matric number exists but exclude the current instance
+        if Student.objects.filter(matric_number=matric_number).exclude(pk=self.instance.pk).exists():
             raise forms.ValidationError("Matric number already exists.")
         return matric_number

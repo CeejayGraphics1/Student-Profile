@@ -125,3 +125,8 @@ AUTH_USER_MODEL = 'student_profile.AdminStaff'
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+# Add these settings
+LOGIN_URL = 'login'  # URL name where users will be redirected if not logged in
+LOGIN_REDIRECT_URL = 'dashboard'  # URL name where users will be redirected after logging in
+LOGOUT_REDIRECT_URL = 'login'  # Redirects to login page after logout

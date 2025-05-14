@@ -13,7 +13,7 @@
     <div class="dashboard-main">
         <nav class="dashboard-nav">
             <div class="dashboard-container">
-                <button class="back-btn" onclick="window.history.back();">
+                <button class="back-btn" onclick="window.location.href='{% url 'view_students' %}'">
                     <i class="lni lni-arrow-left"></i>
                 </button>
                 <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
@@ -29,61 +29,67 @@
             <div class="upload-content">
                 <div class="photo-upload-section">
                     <div class="photo-container">
-                        <img id="preview" src="" alt="" />
+                        {% if student.photo %}
+                            <img id="preview" src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" />
+                        {% else %}
+                            <img id="preview" src="{% static 'images/images.jpeg' %}" alt="Default photo" />
+                        {% endif %}
                         <div class="upload-overlay">
                             <i class="lni lni-upload"></i>
                             <span>UPLOAD A PICTURE</span>
                         </div>
-                        <input type="file" id="photo-upload" accept="image/*" class="photo-input" />
+                        <input type="file" name="photo" id="photo-upload" accept="image/*" class="photo-input" />
                     </div>
                 </div>
 
-                <form class="upload-form">
+                <form class="upload-form" method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
                     <div class="form-field">
                         <span class="field-name">Surname:</span>
-                        <input type="text" class="form-input" required>
+                        <input type="text" name="surname" class="form-input" value="{{ student.surname }}" required>
                     </div>
                     <div class="form-field">
                         <span class="field-name">Other Names:</span>
-                        <input type="text" class="form-input" required>
+                        <input type="text" name="other_names" class="form-input" value="{{ student.other_names }}" required>
                     </div>
                     <div class="form-field">
                         <span class="field-name">Date of Birth:</span>
-                        <input type="date" class="form-input" required>
+                        <input type="date" name="date_of_birth" class="form-input" value="{{ student.date_of_birth|date:'Y-m-d' }}" required>
                     </div>
                     <div class="form-field">
                         <span class="field-name">Level:</span>
-                        <select class="form-input" required>
-                            <option value="" disabled selected>Select Level</option>
-                            <option value="100">100</option>
-                            <option value="200">200</option>
-                            <option value="300">300</option>
-                            <option value="400">400</option>
+                        <select name="level" class="form-input" required>
+                            <option value="100" {% if student.level == '100' %}selected{% endif %}>100</option>
+                            <option value="200" {% if student.level == '200' %}selected{% endif %}>200</option>
+                            <option value="300" {% if student.level == '300' %}selected{% endif %}>300</option>
                         </select>
                     </div>
                     <div class="form-field">
                         <span class="field-name">Department:</span>
-                        <select class="form-input" required>
-                            <option value="" disabled selected>Select Department</option>
-                            <option value="Sociology">Sociology</option>
-                            <option value="Economics">Economics</option>
-                            <option value="Political Science">Political Science</option>
-                            <option value="Computer Science">Computer Science</option>
-                            <option value="Mass Communication">Mass Communication</option>
-                            <option value="Accounting & Finance">Accounting & Finance</option>
-                            <option value="Public Administration">Public Administration</option>
-                            <option value="Business Administration">Business Administration</option>
-                            <option value="Human Resource Management">Human Resource Management</option>
-                            <option value="International Relation & Diplomacy">International Relation & Diplomacy</option>
-                            <option value="Environmental Health Management">Environmental Health Management</option>
-                            <option value="Community Health Management">Community Health Management</option>
-                            <option value="Nursing">Nursing</option>
+                        <select name="department" class="form-input" required>
+                            {% for code, name in form.fields.department.choices %}
+                                {% if code != '' %}
+                                    <option value="{{ code }}" {% if student.department == code %}selected{% endif %}>{{ name }}</option>
+                                {% endif %}
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-field">
                         <span class="field-name">Matric Number:</span>
-                        <input type="text" class="form-input" required>
+                        <input type="text" name="matric_number" class="form-input" value="{{ student.matric_number }}" required>
                     </div>
+
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} fade show">
+                            <i class="lni {% if message.tags == 'error' %}lni-close{% else %}lni-checkmark{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
                     <button type="submit" class="submit-btn">
                         <i class="lni lni-upload"></i> UPDATE
                     </button>

@@ -68,11 +68,26 @@ class AdminStaff(AbstractUser):
 
 
 class Student(models.Model):
+    DEPARTMENT_CHOICES = [
+        ('Sociology', 'Sociology'),
+        ('Economics', 'Economics'),
+        ('Political Science', 'Political Science'),
+        ('Computer Science', 'Computer Science'),
+        ('Mass Communication', 'Mass Communication'),
+        ('Accounting & Finance', 'Accounting & Finance'),
+        ('Public Administration', 'Public Administration'),
+        ('Business Administration', 'Business Administration'),
+        ('Human Resource Management', 'Human Resource Management'),
+        ('International Relation & Diplomacy', 'International Relations & Diplomacy'),
+        ('Environmental Health Management', 'Environmental Health Management'),
+        ('Community Health Management', 'Community Health Management'),
+        ('Nursing', 'Nursing'),
+    ]
     surname = models.CharField(max_length=100)
     other_names = models.CharField(max_length=150)
     date_of_birth = models.DateField()
     level = models.CharField(max_length=10)
-    department = models.CharField(max_length=100)
+    department = models.CharField(max_length=50, choices=DEPARTMENT_CHOICES)
     matric_number = models.CharField(max_length=50, unique=True)
     photo = models.ImageField(upload_to='students/photos/', blank=True, null=True)
 
