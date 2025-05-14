@@ -278,16 +278,21 @@ def staff(request):
     return render(request, 'staff.html', context)
 
 @login_required
+@staff_required
 def staff_view_students(request):
     selected_dept = request.GET.get('department')
     
     students_by_level = {}
-    levels = [100, 200, 300]  # Changed to integers
+    levels = [100, 200, 300]
     
     for level in levels:
-        query = Q(level=str(level))  # Convert to string for database query
+        # Build the query
+        query = Q(level=str(level))
         if selected_dept:
-            query &= Q(department=selected_dept)
+            # Make the department search case-insensitive
+            query &= Q(department__iexact=selected_dept)
+        
+        # Get students for this level and department
         students = Student.objects.filter(query).order_by('surname')
         students_by_level[level] = students
 
@@ -295,7 +300,7 @@ def staff_view_students(request):
         'levels': levels,
         'students_by_level': students_by_level,
         'selected_dept': selected_dept,
-        'departments': [  # Add departments list
+        'departments': [
             'SOCIOLOGY', 'ECONOMICS', 'POLITICAL SCIENCE', 'COMPUTER SCIENCE',
             'MASS COMMUNICATION', 'ACCOUNTING & FINANCE', 'PUBLIC ADMINISTRATION',
             'BUSSINESS ADMINSTRATION', 'HUMAN RESOURCE MANAGEMENT',
@@ -567,7 +572,6 @@ def export_students_pdf(request):
     return response
 
 @login_required
-@admin_required
 def filter_student(request, id):
     student = get_object_or_404(Student, pk=id)
     return render(request, 'filter_student.html', {'student': student})

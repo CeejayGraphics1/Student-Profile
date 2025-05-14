@@ -97,12 +97,10 @@
         {% for level in levels %}
   <div class="level-section">
     <div class="level-header">
-      <div class="level-left">
         <span class="level-tag">{{ level }}L</span>
         <button onclick="toggleAll('{{ level }}')" class="select-all-btn">
           SELECT ALL
         </button>
-      </div>
     </div>
 
     {% with level_students=students_by_level|get_item:level %}

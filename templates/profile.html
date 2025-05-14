@@ -52,15 +52,15 @@
               <div class="field-value">{{ user.get_role_display|upper }}</div>
             </div>
             <div class="student-actions">
-              <button
+              <!-- <button
                 class="action-btn filter-btn"
                 onclick="window.location.href='{% url 'modify_admin' user.id %}'"
               >
                 <i class="lni lni-pencil"></i>
                 MODIFY
-              </button>
+              </button> -->
               <button
-                class="action-btn bg-danger"
+                class="admin-btn view-btn bg-danger" style="background-color: #ff3b3b; color: white;"
                 onclick="window.location.href='{% url 'logout' %}'"
               >
                 <i class="lni lni-exit"></i>

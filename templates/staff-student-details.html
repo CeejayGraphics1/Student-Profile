@@ -7,6 +7,10 @@
     <title>Student Details - ESPAM Formation University</title>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
     <script defer src="{% static 'js/script.js' %}"></script>
   </head>
   <body>
@@ -27,59 +31,80 @@
 
       <main class="student-details-container">
         <div class="page-title">
-            <h3>Student Details</h3>
+          <h3>Student Details</h3>
         </div>
         <div class="student-details-content">
-          <div class="student-photo">
-            <img src="{% static 'images/student1.jpg' %}" alt="" />
+          <div class="photo-upload-section">
+            <div class="photo-container">
+              {% if student.photo %}
+              <img
+                src="{{ student.photo.url }}"
+                alt="{{ student.surname }}'s photo"
+                width="100"
+                class="student-image"
+              />
+              {% else %}
+              <img
+                src="{% static 'images/images.jpeg' %}"
+                alt="{{ student.surname }}'s photo"
+                width="100"
+                class="student-image"
+              />
+              {% endif %}
+            </div>
           </div>
           <div class="student-fields">
             <div class="field-group">
               <div class="field-label">Surname:</div>
-              <div class="field-value">FOLAKE</div>
+              <div class="field-value">{{ student.surname }}</div>
             </div>
             <div class="field-group">
               <div class="field-label">Other Names:</div>
-              <div class="field-value">Miracle Shirat</div>
+              <div class="field-value">{{ student.other_names }}</div>
             </div>
             <div class="field-group">
               <div class="field-label">Date of Birth:</div>
-              <div class="field-value">24/07/2002</div>
+              <div class="field-value">{{ student.date_of_birth }}</div>
             </div>
-            <div class="row">
-                <div class="col field-group">
-                    <div class="field-label">Level:</div>
-                    <div class="field-value">200</div>
-                </div>
-                <div class="col field-group">
-                    <div class="field-label">Session:</div>
-                    <div class="field-value">2023/2023</div>
-                </div>
-            </div>
+              <div class="field-group">
+                <div class="field-label">Level:</div>
+                <div class="field-value">{{ student.level }}</div>
+              </div>
             <div class="field-group">
               <div class="field-label">Department:</div>
-              <div class="field-value">Computer Science</div>
+              <div class="field-value">{{ student.department }}</div>
             </div>
             <div class="field-group">
               <div class="field-label">Matric Number:</div>
-              <div class="field-value">esp/csc/22/1022</div>
+              <div class="field-value">{{ student.matric_number }}</div>
             </div>
             <div class="student-actions">
-                  <button class="action-btn export-btn">
-                    <i class="lni lni-download"></i>
-                    EXPORT
-                  </button>
-                </div>
-              </div>
+              <a
+                href="{% url 'filter_student' student.id %}" style="text-decoration: none; color: #2a1b6d;"
+              >
+                <button class="action-btn bg-warning">
+                  <i class="fas fa-filter" style="color: #2a1b6d;"></i>
+                  FILTER
+                </button>
+              </a>
+              <button class="action-btn export-btn" onclick="exportStudent()">
+                <i class="lni lni-download"></i>
+                EXPORT
+              </button>
+            </div>
           </div>
         </div>
-
-        
       </main>
 
       <footer class="dashboard-footer">
         <p>All rights reserved by ESPAM FORMATION UNIVERSITY.</p>
       </footer>
     </div>
+
+    <script>
+      function exportStudent() {
+        window.location.href = "{% url 'export_student_pdf' student.id %}";
+      }
+    </script>
   </body>
 </html>
