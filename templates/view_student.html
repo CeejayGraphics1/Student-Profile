@@ -242,18 +242,14 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
-        // Handle individual checkbox clicks
         document.querySelectorAll(".student-card").forEach((card) => {
           const checkbox = card.querySelector(".student-checkbox");
           const studentInfo = card.querySelector(".student-info");
 
-          // Handle checkbox click
           checkbox.addEventListener("click", function (e) {
             e.stopPropagation();
-            // Don't need to manually toggle - let default behavior work
           });
 
-          // Prevent student info link from interfering with checkbox
           studentInfo.addEventListener("click", function (e) {
             if (e.target.closest(".student-select")) {
               e.preventDefault();
@@ -261,7 +257,6 @@
           });
         });
 
-        // Update Select All button when individual checkboxes change
         document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
           checkbox.addEventListener("change", function () {
             const level = this.classList[1].split("-")[1];
@@ -290,7 +285,6 @@
           return;
         }
 
-        // Create URL with selected student IDs
         const url = `{% url 'export_students_pdf' %}?ids=${studentIds.join(
           ","
         )}`;

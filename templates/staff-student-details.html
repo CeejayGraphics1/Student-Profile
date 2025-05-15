@@ -66,10 +66,10 @@
               <div class="field-label">Date of Birth:</div>
               <div class="field-value">{{ student.date_of_birth }}</div>
             </div>
-              <div class="field-group">
-                <div class="field-label">Level:</div>
-                <div class="field-value">{{ student.level }}</div>
-              </div>
+            <div class="field-group">
+              <div class="field-label">Level:</div>
+              <div class="field-value">{{ student.level }}</div>
+            </div>
             <div class="field-group">
               <div class="field-label">Department:</div>
               <div class="field-value">{{ student.department }}</div>
@@ -80,10 +80,11 @@
             </div>
             <div class="student-actions">
               <a
-                href="{% url 'filter_student' student.id %}" style="text-decoration: none; color: #2a1b6d;"
+                href="{% url 'filter_student' student.id %}"
+                style="text-decoration: none; color: #2a1b6d"
               >
                 <button class="action-btn bg-warning">
-                  <i class="fas fa-filter" style="color: #2a1b6d;"></i>
+                  <i class="fas fa-filter" style="color: #2a1b6d"></i>
                   FILTER
                 </button>
               </a>

@@ -34,10 +34,16 @@
                 </button>
               </div>
               <div class="admin-buttons">
-                <button class="admin-btn view-btn" onclick="window.location.href='{% url 'view_admin' %}'">
+                <button
+                  class="admin-btn view-btn"
+                  onclick="window.location.href='{% url 'view_admin' %}'"
+                >
                   VIEW STAFF/ADMIN IN THE SYSTEM
                 </button>
-                <button class="admin-btn add-btn" onclick="window.location.href='{% url 'upload_admin' %}'">
+                <button
+                  class="admin-btn add-btn"
+                  onclick="window.location.href='{% url 'upload_admin' %}'"
+                >
                   ADD STAFF OR ADMIN
                 </button>
                 <button
@@ -49,9 +55,7 @@
               </div>
               <ul class="dept-list">
                 <li>
-                  <a href="{% url 'view_students' %}"
-                    >ALL DEPARTMENT</a
-                  >
+                  <a href="{% url 'view_students' %}">ALL DEPARTMENT</a>
                 </li>
                 <li>
                   <a href="{% url 'view_students' %}?department=SOCIOLOGY"
@@ -130,7 +134,11 @@
               </ul>
             </div>
           </div>
-          <form action="{% url 'search_students' %}" method="GET" class="dashboard-search">
+          <form
+            action="{% url 'search_students' %}"
+            method="GET"
+            class="dashboard-search"
+          >
             <input
               type="search"
               name="term"
@@ -138,7 +146,10 @@
               class="dashboard-search-input"
             />
           </form>
-          <button class="dashboard-upload" onclick="window.location.href='{% url 'upload' %}'">
+          <button
+            class="dashboard-upload"
+            onclick="window.location.href='{% url 'upload' %}'"
+          >
             <i class="lni lni-upload"></i>
             UPLOAD
           </button>
@@ -157,7 +168,10 @@
           </div>
           <div class="student-list">
             {% for admin in admins %}
-            <a href="{% url 'admin_details' admin.id %}" class="text-decoration-none">
+            <a
+              href="{% url 'admin_details' admin.id %}"
+              class="text-decoration-none"
+            >
               <div class="student-card">
                 <div class="student-info">
                   <div class="student-details">
@@ -180,11 +194,16 @@
           </div>
           <div class="student-list">
             {% for staff_member in staff %}
-            <a href="{% url 'admin_details' staff_member.id %}" class="text-decoration-none">
+            <a
+              href="{% url 'admin_details' staff_member.id %}"
+              class="text-decoration-none"
+            >
               <div class="student-card">
                 <div class="student-info">
                   <div class="student-details">
-                    <h3>{{ staff_member.first_name }} {{ staff_member.last_name }}</h3>
+                    <h3>
+                      {{ staff_member.first_name }} {{ staff_member.last_name }}
+                    </h3>
                     <p>Email: {{ staff_member.email }}</p>
                     <p>Title: {{ staff_member.get_title_display }}</p>
                     <p>Role: {{ staff_member.get_role_display }}</p>

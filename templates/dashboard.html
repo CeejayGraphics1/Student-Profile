@@ -14,7 +14,6 @@
       type="text/css"
       href="{% static 'css/style.css' %}"
     />
-    <!-- Add before </body> tag -->
     <script defer src="{% static 'js/script.js' %}"></script>
     <link href="https://cdn.lineicons.com/4.0/lineicons.css" rel="stylesheet" />
   </head>
@@ -55,9 +54,7 @@
               </div>
               <ul class="dept-list">
                 <li>
-                  <a href="{% url 'view_students' %}"
-                    >ALL DEPARTMENT</a
-                  >
+                  <a href="{% url 'view_students' %}">ALL DEPARTMENT</a>
                 </li>
                 <li>
                   <a href="{% url 'view_students' %}?department=SOCIOLOGY"
@@ -136,7 +133,11 @@
               </ul>
             </div>
           </div>
-          <form action="{% url 'search_students' %}" method="GET" class="dashboard-search">
+          <form
+            action="{% url 'search_students' %}"
+            method="GET"
+            class="dashboard-search"
+          >
             <input
               type="search"
               name="term"

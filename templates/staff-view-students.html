@@ -44,7 +44,7 @@
                   {% csrf_token %}
                   <button class="admin-btn view-btn bg-danger w-100">
                     LOGOUT
-                </button>
+                  </button>
                 </form>
               </div>
               <ul class="dept-list">
@@ -84,35 +84,42 @@
       <main class="student-list-wrapper">
         <div class="department-header">
           <h2 class="department-title">
-            {% if is_search %}
-              Search Results for "{{ search_term }}"
-            {% elif selected_dept %}
-              {{ selected_dept }}
-            {% else %}
-              All Departments
-            {% endif %}
+            {% if is_search %} Search Results for "{{ search_term }}" {% elif
+            selected_dept %} {{ selected_dept }} {% else %} All Departments {%
+            endif %}
           </h2>
         </div>
 
         {% for level in levels %}
-  <div class="level-section">
-    <div class="level-header">
-        <span class="level-tag">{{ level }}L</span>
-        <button onclick="toggleAll('{{ level }}')" class="select-all-btn">
-          SELECT ALL
-        </button>
-    </div>
+        <div class="level-section">
+          <div class="level-header">
+            <span class="level-tag">{{ level }}L</span>
+            <button onclick="toggleAll('{{ level }}')" class="select-all-btn">
+              SELECT ALL
+            </button>
+          </div>
 
-    {% with level_students=students_by_level|get_item:level %}
-      {% if level_students %}
-        <div class="student-list">
-          {% for student in level_students %}
+          {% with level_students=students_by_level|get_item:level %} {% if
+          level_students %}
+          <div class="student-list">
+            {% for student in level_students %}
             <div class="student-card">
-              <a href="{% url 'staff_student_details' student.id %}" class="student-info text-decoration-none">
+              <a
+                href="{% url 'staff_student_details' student.id %}"
+                class="student-info text-decoration-none"
+              >
                 {% if student.photo %}
-                  <img src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" class="student-image" />
+                <img
+                  src="{{ student.photo.url }}"
+                  alt="{{ student.surname }}'s photo"
+                  class="student-image"
+                />
                 {% else %}
-                  <img src="{% static 'images/images.jpeg' %}" alt="Default photo" class="student-image" />
+                <img
+                  src="{% static 'images/images.jpeg' %}"
+                  alt="Default photo"
+                  class="student-image"
+                />
                 {% endif %}
                 <div class="student-details">
                   <h3>{{ student.surname }} {{ student.other_names }}</h3>
@@ -129,17 +136,15 @@
                 />
               </div>
             </div>
-          {% endfor %}
+            {% endfor %}
+          </div>
+          {% else %}
+          <div class="no-students">
+            <p>No students found in {{ level }}L</p>
+          </div>
+          {% endif %} {% endwith %}
         </div>
-      {% else %}
-        <div class="no-students">
-          <p>No students found in {{ level }}L</p>
-        </div>
-      {% endif %}
-    {% endwith %}
-  </div>
-{% endfor %}
-
+        {% endfor %}
       </main>
 
       <footer class="dashboard-footer">
@@ -164,17 +169,14 @@
       }
 
       document.addEventListener("DOMContentLoaded", function () {
-        // Handle individual checkbox clicks
         document.querySelectorAll(".student-card").forEach((card) => {
           const checkbox = card.querySelector(".student-checkbox");
           const studentInfo = card.querySelector(".student-info");
 
-          // Handle checkbox click
           checkbox.addEventListener("click", function (e) {
             e.stopPropagation();
           });
 
-          // Prevent student info link from interfering with checkbox
           studentInfo.addEventListener("click", function (e) {
             if (e.target.closest(".student-select")) {
               e.preventDefault();
@@ -182,7 +184,6 @@
           });
         });
 
-        // Update Select All button when individual checkboxes change
         document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
           checkbox.addEventListener("change", function () {
             const level = this.classList[1].split("-")[1];
@@ -199,7 +200,6 @@
           });
         });
 
-        // Handle search input
         document
           .getElementById("searchInput")
           .addEventListener("input", function (e) {
@@ -221,7 +221,6 @@
                   document.querySelector(".student-list-wrapper").innerHTML =
                     studentList.innerHTML;
 
-                  // Reinitialize checkbox functionality
                   initializeCheckboxes();
                 });
             }

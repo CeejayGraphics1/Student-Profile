@@ -77,11 +77,8 @@ body::before {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: space-between; /* Changed from center to space-between */
-  padding: 1rem;
+  justify-content: space-between;
   position: relative;
-  z-index: 1;
-  overflow: hidden;
 }
 
 .content-wrapper {
@@ -89,11 +86,10 @@ body::before {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 3rem; /* Increased margin from top */
 }
 
 .login-form-container {
-  margin-top: 2rem; /* Added margin from top of form container */
+  margin-top: 2rem;
 }
 
 .welcome-text {
@@ -206,7 +202,7 @@ body::before {
   }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
   .welcome-text {
     font-size: 2rem;
   }
@@ -231,10 +227,64 @@ body::before {
 
   .content-wrapper {
     margin-top: 2rem;
+    padding: 1rem;
   }
 
   .login-form-container {
     margin-top: 1.5rem;
+    max-width: 100%;
+    padding: 1.5rem;
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  .login-title {
+    width: 100%;
+    text-align: center;
+    display: block;
+    font-size: 1.1rem;
+    padding: 0.8rem;
+    margin: 0 auto 1.5rem;
+  }
+
+  .form-group {
+    margin-bottom: 1rem;
+  }
+
+  .form-control {
+    text-align: center;
+    font-size: 0.9rem;
+  }
+
+  .login-btn {
+    width: 100%;
+    justify-content: center;
+    margin: 1rem auto 0;
+    padding: 0.8rem;
+  }
+
+  .messages {
+    width: 100%;
+    margin: 0 auto 1rem;
+  }
+
+  .alert {
+    text-align: center;
+    justify-content: center;
+  }
+
+  .network-image {
+    display: none; 
+  }
+
+  .row {
+    justify-content: center !important;
+  }
+
+  .col-md-5 {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
   }
 
   .network-image {
@@ -280,9 +330,23 @@ body::before {
   .wave {
     height: 50px;
   }
+
+  .login-form-container {
+    padding: 1rem;
+  }
+
+  .login-title {
+    font-size: 1rem;
+    padding: 0.6rem;
+  }
+
+  .form-control {
+    padding: 0.6rem 1rem;
+  }
 }
 
-/* Add these new styles for the login page */
+
+/* LOGIN PAGE STYLING */
 
 .content-wrapper-login {
   flex: 1;
@@ -349,15 +413,15 @@ body::before {
 
 .network-image {
   display: none;
-  margin-top: 2rem; /* Match the form container margin */
+  margin-top: 2rem; 
 }
 
 @media (min-width: 992px) {
   .network-image {
     display: block;
-    max-height: 550px; /* Reduced from 70vh */
-    width: 550px; /* Added fixed width */
-    margin-left: auto; /* Center the image */
+    max-height: 550px;
+    width: 550px;
+    margin-left: auto; 
   }
 
   .network-image img {
@@ -393,7 +457,7 @@ body::before {
   }
 }
 
-/* Responsive adjustments */
+
 @media (max-width: 768px) {
   .login-container {
     padding: 1.5rem;
@@ -436,7 +500,7 @@ body::before {
   transform: translate(-50%, -50%);
   width: 500px;
   height: 500px;
-  background-image: url("../images/Espam logo.png"); /* Updated path */
+  background-image: url("../images/Espam logo.png"); 
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -544,8 +608,8 @@ body::before {
 .level-section {
   position: relative;
   margin: 0;
-  padding-top: 5px; 
-  margin-bottom: 0.5rem; /* Added to create consistent spacing */
+  padding-top: 5px;
+  margin-bottom: 0.5rem; 
 }
 
 .level-tag {
@@ -605,7 +669,7 @@ close-menu:hover {
   background-color: rgba(42, 27, 109, 0.1);
 }
 
-.dept-list li a{
+.dept-list li a {
   text-decoration: none;
   color: inherit;
 }
@@ -795,6 +859,7 @@ close-menu:hover {
   right: 0;
   text-align: center;
   padding: 1rem;
+  background-color: white;
   color: #2a1b6d;
   font-weight: 600;
   z-index: 999;
@@ -803,10 +868,10 @@ close-menu:hover {
 .student-list {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem; /* Reduced from 1rem */
-  margin-top: 0.5rem; /* Reduced from 2rem */
+  gap: 0.75rem;
+  margin-top: 0.5rem; 
   padding: 0 2rem;
-  padding-bottom: 80px; /* Add padding to prevent content from being hidden behind footer */
+  padding-bottom: 80px; 
 }
 
 .student-list-wrapper {
@@ -891,6 +956,39 @@ close-menu:hover {
 }
 
 @media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: row;
+    align-items: center;
+    padding: 0.5rem;
+    gap: 0.5rem;
+  }
+
+  .menu-wrapper {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .department-menu {
+    width: 100%;
+    height: calc(100vh - 70px);
+    top: 70px;
+  }
+
+  .dashboard-search {
+    flex: 1;
+    margin: 0 0.5rem;
+  }
+
+  .dashboard-search-input {
+    width: 100%;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .student-list-wrapper {
+    margin-top: 80px;
+  }
+
   .dashboard-container {
     flex-direction: column;
     gap: 1rem;
@@ -984,7 +1082,7 @@ close-menu:hover {
   }
 }
 
-/* Menu toggle animation */
+/* MENU TOGGLE ANIMATION */
 .menu-toggle.active .menu-line:nth-child(1) {
   transform: translateY(8px) rotate(45deg);
 }
@@ -1112,17 +1210,17 @@ close-menu:hover {
 .level-section {
   position: relative;
   margin: 0;
-  padding-top: 15px; /* Reduced from 30px */
-  margin-bottom: 1rem; /* Added to create consistent spacing */
+  padding-top: 15px; 
+  margin-bottom: 1rem; 
 }
 
 .level-header {
   position: sticky;
-  top: 140px; /* Navbar height + Department header height */
+  top: 140px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0.75rem 2rem; /* Reduced from 1rem */
+  padding: 0.75rem 2rem;
   background-color: #fff;
   z-index: 99;
   border-bottom: 1px solid rgba(42, 27, 109, 0.1);
@@ -1130,12 +1228,12 @@ close-menu:hover {
 }
 
 .student-list-wrapper {
-  margin-top: 140px; /* Navbar + Department header height */
+  margin-top: 140px; 
   padding: 0 2rem;
 }
 
 .student-list {
-  padding-bottom: 80px; /* Footer height */
+  padding-bottom: 80px;
 }
 
 @media (max-width: 768px) {
@@ -1145,20 +1243,38 @@ close-menu:hover {
   }
 
   .student-card {
-    flex-direction: column;
-    text-align: center;
+    flex-direction: row;
+    text-align: left;
+    padding: 0.75rem;
   }
 
   .student-info {
-    flex-direction: column;
+    flex-direction: row;
+    align-items: center;
+    gap: 0.75rem;
   }
 
-  .student-year {
-    margin: 0 0 1rem 0;
+  .student-image {
+    width: 45px;
+    height: 45px;
+  }
+
+  .student-details h3 {
+    font-size: 1rem;
+  }
+
+  .student-details p {
+    font-size: 0.85rem;
+    margin: 0.1rem 0;
+  }
+
+  .student-select {
+    display: flex;
+    align-items: center;
   }
 
   .level-header {
-    top: 200px; /* Adjusted for mobile nav height */
+    top: 200px;
   }
 
   .student-list-wrapper {
@@ -1300,6 +1416,102 @@ close-menu:hover {
   }
 }
 
+@media (max-width: 768px) {
+  .student-details-content {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .student-photo {
+    height: 350px;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: row !important;
+    align-items: center !important;
+    padding: 0.8rem 1.2rem !important;
+    margin-bottom: 0.5rem !important;
+    border: 2px solid #e1e1e1;
+    gap: 0rem !important;
+    border-radius: 50px;
+    background: white;
+  }
+
+  .field-value {
+    color: #2a1b6d;
+    font-size: 1rem;
+    font-weight: 500;
+  }
+
+  .student-actions {
+    display: flex;
+    flex-direction: row !important;
+    justify-content: space-between;
+    gap: 0.5rem !important;
+    padding: 0 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .student-fields {
+    margin-bottom: 80px;
+  }
+}
+
+@media (max-width: 768px) {
+  .student-details-content {
+    flex-direction: column;
+    padding: 0 1rem;
+  }
+
+  .photo-upload-section {
+    width: 100%;
+    height: auto;
+  }
+
+  .photo-container {
+    height: 300px;
+  }
+
+  .field-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    margin-bottom: 0.5rem;
+    border-radius: 10px;
+  }
+
+  .field-value {
+    color: #2a1b6d;
+    font-size: 1.1rem;
+    font-weight: 500;
+  }
+
+  .student-actions {
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1rem;
+  }
+
+  .action-btn {
+    flex: 1;
+    margin: 0 0.25rem;
+    padding: 0.75rem 0;
+    justify-content: center;
+  }
+
+  .student-details-container {
+    margin-top: 80px;
+    padding: 1rem;
+  }
+
+  .page-title h3 {
+    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+  }
+}
+
 /* STYLING FOR STUDENT DETAILS PAGE - NEW ADDITIONS */
 .dashboard-title {
   color: white;
@@ -1337,7 +1549,7 @@ close-menu:hover {
   border-radius: 15px;
   border: 2px solid #2a1b6d;
   overflow: hidden;
-  height: 100%; /* This will make it match fields height */
+  height: 100%; 
 }
 
 .student-photo img {
@@ -1385,8 +1597,8 @@ close-menu:hover {
 
 .field-label {
   color: #666;
-  width: 150px;
   font-size: 1rem;
+  padding-right: 0.5rem !important;
 }
 
 .field-value {
@@ -1439,7 +1651,7 @@ close-menu:hover {
   }
 
   .student-photo {
-    height: 350px; /* Fixed height on mobile */
+    height: 350px; 
   }
 
   .student-actions {
@@ -1455,10 +1667,6 @@ close-menu:hover {
     flex-direction: column;
     align-items: flex-start;
     gap: 0.5rem;
-  }
-
-  .field-label {
-    width: auto;
   }
 }
 
@@ -1571,7 +1779,6 @@ close-menu:hover {
 
 .field-name {
   color: #666;
-  width: 150px;
   font-size: 0.9rem;
 }
 
@@ -1604,30 +1811,92 @@ close-menu:hover {
 @media (max-width: 768px) {
   .upload-content {
     flex-direction: column;
+    gap: 0rem;
+    padding: 0 1rem;
+  }
+
+  .upload-form .row{
+    flex-direction: column !important;
   }
 
   .photo-upload-section {
-    flex: 0 0 auto;
-    max-width: 350px;
-    margin: 0 auto;
+    width: 100%;
+    max-width: none;
+    flex: 0 0 100px;
+  }
+
+  .photo-container {
+    height: 300px;
+    margin-bottom: 1.5rem;
   }
 
   .form-field {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    display: flex;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between;
+    padding: 0.8rem 1.2rem;
+    margin-bottom: 0.5rem;
+    border: 2px solid #e1e1e1;
+    border-radius: 50px;
+    background: white;
   }
 
   .field-name {
-    width: 100%;
+    width: auto;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 0;
+    padding-right: 0.5rem !important;
   }
 
   .form-input {
-    width: 100%;
+    padding: 0;
+    color: #2a1b6d;
+    font-size: 1rem;
+    font-weight: 500;
+    background: transparent;
+  }
+
+  select.form-input {
+    padding-right: 1rem;
+    background-position: right center;
   }
 
   .submit-btn {
-    width: 100%;
+    width: auto;
+    padding: 0.8rem 2rem;
+    border-radius: 50px;
+    margin-top: 1.5rem;
+    align-self: stretch;
+  }
+
+  .student-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .upload-container {
+    margin-top: 80px;
+    padding: 1rem;
+  }
+
+  .page-title h3 {
+    font-size: 1.2rem;
+    padding: 0.5rem 2rem;
+  }
+
+  .messages {
+    margin: 1rem 0;
+  }
+
+  .alert {
+    padding: 0.8rem;
+    border-radius: 50px;
   }
 }
 
@@ -1711,8 +1980,6 @@ select.form-control {
   margin-top: 1.5rem;
 }
 
-
-
 /* STYLING FOR ERROR MESSAGE */
 .messages {
   margin-bottom: 1.5rem;
@@ -1747,11 +2014,73 @@ select.form-control {
 
 @keyframes slideIn {
   from {
-      opacity: 0;
-      transform: translateY(-10px);
+    opacity: 0;
+    transform: translateY(-10px);
   }
   to {
-      opacity: 1;
-      transform: translateY(0);
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+@media screen and (max-width: 768px) {
+  .dashboard-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    width: 100%;
+  }
+
+  .menu-wrapper {
+    width: auto;
+    flex-shrink: 0;
+  }
+
+  .dashboard-search {
+    flex: 1;
+    margin: 0 0.5rem;
+    max-width: none;
+  }
+
+  .dashboard-search-input {
+    width: 100%;
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+
+  .dashboard-export {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    white-space: nowrap;
+  }
+
+  .department-menu {
+    position: fixed;
+    width: 100%;
+    height: calc(100vh - 70px);
+    top: 70px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .university-name {
+    width: 95%;
+    font-size: 1rem;
+  }
+
+  .welcome-text {
+    font-size: 1.2rem;
+  }
+
+  .student-text {
+    font-size: 0.9rem;
+  }
+
+  .dept-header-wrapper {
+    padding: 0.5rem;
   }
 }
