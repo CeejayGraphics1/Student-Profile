@@ -26,6 +26,17 @@
                 <h3>Modify Student Information</h3>
             </div>
 
+                    {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} fade show">
+                            <i class="lni {% if message.tags == 'error' %}lni-close{% else %}lni-checkmark{% endif %}"></i>
+                            {{ message }}
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
             <div class="upload-content">
                 <div class="photo-upload-section">
                     <div class="photo-container">
@@ -78,17 +89,6 @@
                         <span class="field-name">Matric Number:</span>
                         <input type="text" name="matric_number" class="form-input" value="{{ student.matric_number }}" required>
                     </div>
-
-                    {% if messages %}
-                    <div class="messages">
-                        {% for message in messages %}
-                        <div class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} fade show">
-                            <i class="lni {% if message.tags == 'error' %}lni-close{% else %}lni-checkmark{% endif %}"></i>
-                            {{ message }}
-                        </div>
-                        {% endfor %}
-                    </div>
-                    {% endif %}
 
                     <button type="submit" class="submit-btn">
                         <i class="lni lni-upload"></i> UPDATE

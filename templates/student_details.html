@@ -27,7 +27,7 @@
     <div class="dashboard-main">
       <nav class="dashboard-nav">
         <div class="dashboard-container">
-          <button class="back-btn" onclick="window.history.back();">
+          <button class="back-btn" onclick="window.location.href='{% url 'view_students' %}'">
             <i class="lni lni-arrow-left"></i>
           </button>
           <h1 class="dashboard-title">ESPAM FORMATION UNIVERSITY</h1>
@@ -154,8 +154,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              Are you sure you want to delete {{student.first_name }}
-              {{student.last_name }}'s details from the system? This action
+              Are you sure you want to delete {{student.surname }}'s details from the system? This action
               cannot be undone.
             </div>
             <div class="modal-footer">

@@ -150,7 +150,7 @@ def modify(request, id):
         if form.is_valid():
             form.save()
             messages.success(request, "Student information updated successfully.")
-            return redirect('student_details', id=student.id)
+            return redirect('modify', id=student.id)
         else:
             messages.error(request, "Failed to update student. Please check the form.")
     else:
