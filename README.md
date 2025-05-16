@@ -1,6 +1,6 @@
 # Student Profile
 
-A web application for managing and viewing student and staff profiles for ESPAM FORMATION UNIVERSITY. The project provides features for searching, filtering, and exporting student information, along with an admin dashboard and user authentication.
+A web application for managing and viewing student profiles for ESPAM FORMATION UNIVERSITY. The project provides features for searching, filtering, and exporting student information, along with an admin dashboard and user authentication.
 
 ## Features
 
