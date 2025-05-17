@@ -204,7 +204,7 @@ body::before {
 
 @media (max-width: 800px) {
   .welcome-text {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .university-name {
@@ -294,7 +294,7 @@ body::before {
 
 @media (max-width: 480px) {
   .welcome-text {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
 
   .university-name {
@@ -913,13 +913,6 @@ close-menu:hover {
   color: inherit;
 }
 
-.student-image {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-
 .student-details h3 {
   color: #2a1b6d;
   font-size: 1.1rem;
@@ -1257,6 +1250,7 @@ close-menu:hover {
   .student-image {
     width: 45px;
     height: 45px;
+    object-fit: cover;
   }
 
   .student-details h3 {
@@ -1467,10 +1461,6 @@ close-menu:hover {
   .photo-upload-section {
     width: 100%;
     height: auto;
-  }
-
-  .photo-container {
-    height: 300px;
   }
 
   .field-group {
@@ -1687,10 +1677,6 @@ close-menu:hover {
   flex: 0 0 400px;
 }
 
-.photo-container {
-  position: relative;
-}
-
 .photo-checkbox-wrapper {
   position: absolute;
   top: 10px;
@@ -1709,10 +1695,6 @@ close-menu:hover {
   color: #333;
   margin: 0;
   cursor: pointer;
-}
-
-.photo-container {
-  position: relative;
 }
 
 .photo-container {
@@ -1826,7 +1808,7 @@ close-menu:hover {
   }
 
   .photo-container {
-    height: 300px;
+    height: 500px;
     margin-bottom: 1.5rem;
   }
 
@@ -2070,10 +2052,6 @@ select.form-control {
   .university-name {
     width: 95%;
     font-size: 1rem;
-  }
-
-  .welcome-text {
-    font-size: 1.2rem;
   }
 
   .student-text {

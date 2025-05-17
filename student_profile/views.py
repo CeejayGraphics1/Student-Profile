@@ -83,7 +83,7 @@ def dashboard(request):
 def view_students(request):
     selected_dept = request.GET.get('department', None)
     students_by_level = {}
-    levels = [100, 200, 300]
+    levels = [100, 200, 300, 400]
     
     for level in levels:
         if selected_dept:
@@ -396,7 +396,7 @@ def search_students(request):
     
     # Group students by level as in view_students
     students_by_level = {}
-    levels = [100, 200, 300]
+    levels = [100, 200, 300, 400]
     
     for level in levels:
         students_by_level[level] = students.filter(level=str(level))
@@ -416,7 +416,7 @@ def export_student_pdf(request, id):
     
     # Create response object
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="student_{student.matric_number}.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="{student.surname} {student.other_names} details.pdf"'
     
     # Create PDF object
     buffer = BytesIO()
@@ -486,61 +486,63 @@ def export_students_pdf(request):
     # Get selected student IDs from query parameter
     student_ids = request.GET.get('ids', '').split(',')
     students = Student.objects.filter(id__in=student_ids).order_by('level', 'surname')
-    
+
     if not students:
         return HttpResponse("No students selected", status=400)
-    
+
     # Create response object
+    if len(students) == 1:
+        student = students.first()
+        filename = f"{student.surname} {student.other_names} details.pdf"
+    else:
+        filename = "selected_students.pdf"
+
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = 'attachment; filename="selected_students.pdf"'
-    
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
     # Create PDF object
     buffer = BytesIO()
     p = canvas.Canvas(buffer, pagesize=A4)
     width, height = A4
-    
-    # Add logo and header (same as single student export)
+
+    # Add logo and header
     logo_path = os.path.join(settings.BASE_DIR, 'static', 'images', 'Espam Logo.png')
     if os.path.exists(logo_path):
         p.drawImage(logo_path, width/2 - 50, height - 150, width=100, height=100)
-    
+
     # Add header text
     p.setFont("Helvetica-Bold", 16)
     p.drawCentredString(width/2, height - 180, "ESPAM FORMATION UNIVERSITY")
-    
+
     p.setFont("Helvetica", 10)
     p.drawCentredString(width/2, height - 200, "Address: Sacouba Anavie Campus, Porto-Novo, Republic of Benin.")
     p.drawCentredString(width/2, height - 220, "Phone: +22946436904, +2348035637035, +22956885802")
     p.drawCentredString(width/2, height - 240, "Email: espamformationunicampus2@gmail.com")
-    
+
     # Add title
     p.setFont("Helvetica-Bold", 14)
     p.drawCentredString(width/2, height - 280, "STUDENT PROFILES REPORT")
-    
+
     # Initialize starting position
     y_position = height - 320
-    
+
     # Loop through each student
     for student in students:
-        # Check if we need a new page
         if y_position < 150:
             p.showPage()
             y_position = height - 100
-        
-        # Draw line above each student (except first one)
+
         if y_position < height - 320:
             p.line(50, y_position + 30, width - 50, y_position + 30)
             y_position -= 20
-        
-        # Add student photo
+
         if student.photo:
             try:
                 photo_path = student.photo.path
                 p.drawImage(photo_path, 50, y_position - 100, width=100, height=100)
             except:
                 pass
-        
-        # Add student details
+
         p.setFont("Helvetica-Bold", 12)
         details = [
             f"Surname: {student.surname}",
@@ -550,25 +552,19 @@ def export_students_pdf(request):
             f"Level: {student.level}",
             f"Department: {student.department}"
         ]
-        
+
         for i, detail in enumerate(details):
             p.drawString(200, y_position - (i * 20), detail)
-        
-        # Update position for next student
+
         y_position -= 150
-    
-    # Add footer
-    p.setFont("Helvetica", 8)
-    p.drawCentredString(width/2, 30, "All rights reserved by ESPAM FORMATION UNIVERSITY.")
-    
-    # Save PDF
+
     p.showPage()
     p.save()
-    
+
     pdf = buffer.getvalue()
     buffer.close()
     response.write(pdf)
-    
+
     return response
 
 @login_required
@@ -581,7 +577,7 @@ def export_filtered_pdf(request, id):
     selected_fields = request.GET.get('fields', '').split(',')
     
     response = HttpResponse(content_type='application/pdf')
-    response['Content-Disposition'] = f'attachment; filename="student_{student.matric_number}_filtered.pdf"'
+    response['Content-Disposition'] = f'attachment; filename="{student.surname} {student.other_names} filtered details.pdf.pdf"'
     
     # Create PDF object
     buffer = BytesIO()
