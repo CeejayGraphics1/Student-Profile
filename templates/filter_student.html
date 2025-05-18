@@ -160,7 +160,6 @@
             </div>
             
             <div class="student-actions">
-              <div class="action-right">
                 <button
                   onclick="exportFilteredDetails()"
                   class="action-btn export-btn"
@@ -168,7 +167,6 @@
                   <i class="lni lni-download"></i>
                   EXPORT
                 </button>
-              </div>
             </div>
           </div>
         </div>
@@ -195,5 +193,14 @@
         )}`;
       }
     </script>
+
+    <style>
+      .action-btn.export-btn{
+        display: flex !important;
+        justify-content: center !important;
+        align-items: center !important;
+        flex: 1;
+      }
+    </style>
   </body>
 </html>

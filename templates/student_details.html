@@ -91,23 +91,25 @@
               <div class="field-value">{{ student.matric_number }}</div>
             </div>
             <div class="student-actions">
-              <button
+              <div class="action-right">
+                <button
                 class="action-btn delete-btn"
                 data-bs-toggle="modal"
                 data-bs-target="#deleteConfirmationModal"
-              >
-                <i class="lni lni-trash-can"></i>
-                DELETE
-              </button>
-              <a
-                href="{% url 'filter_student' student.id %}"
-                class="text-decoration-none"
-              >
-                <button class="action-btn bg-warning" style="color: white">
-                  <i class="fas fa-filter" style="color: white"></i>
-                  FILTER
+                >
+                  <i class="lni lni-trash-can"></i>
+                  DELETE
                 </button>
-              </a>
+                <a
+                  href="{% url 'filter_student' student.id %}"
+                  class="text-decoration-none"
+                >
+                  <button class="action-btn bg-warning" style="color: white">
+                    <i class="fas fa-filter" style="color: white"></i>
+                    FILTER
+                  </button>
+                </a>
+              </div>
               <div class="action-right">
                 <a
                   href="{% url 'modify' student.id %}"

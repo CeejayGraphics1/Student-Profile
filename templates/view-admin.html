@@ -55,84 +55,12 @@
                 </button>
               </div>
               <ul class="dept-list">
-                <li>
-                  <a href="{% url 'view_students' %}">ALL DEPARTMENT</a>
-                </li>
-                <li>
-                  <a href="{% url 'view_students' %}?department=SOCIOLOGY"
-                    >SOCIOLOGY</a
-                  >
-                </li>
-                <li>
-                  <a href="{% url 'view_students' %}?department=ECONOMICS"
-                    >ECONOMICS</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=POLITICAL_SCIENCE"
-                    >POLITICAL SCIENCE</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=COMPUTER_SCIENCE"
-                    >COMPUTER SCIENCE</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=MASS_COMMUNICATION"
-                    >MASS COMMUNICATION</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=ACCOUNTING_FINANCE"
-                    >ACCOUNTING & FINANCE</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=PUBLIC_ADMINISTRATION"
-                    >PUBLIC ADMINISTRATION</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=BUSINESS_ADMINISTRATION"
-                    >BUSINESS ADMINISTRATION</a
-                  >
-                </li>
-                <li>
-                  <a href="{% url 'view_students' %}?department=HUMAN_RESOURCE"
-                    >HUMAN RESOURCE MANAGEMENT</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=INTERNATIONAL_RELATIONS"
-                    >INTERNATIONAL RELATION & DIPLOMACY</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=ENVIRONMENTAL_HEALTH"
-                    >ENVIRONMENTAL HEALTH MANAGEMENT</a
-                  >
-                </li>
-                <li>
-                  <a
-                    href="{% url 'view_students' %}?department=COMMUNITY_HEALTH"
-                    >COMMUNITY HEALTH MANAGEMENT</a
-                  >
-                </li>
-                <li>
-                  <a href="{% url 'view_students' %}?department=NURSING"
-                    >NURSING</a
-                  >
-                </li>
+                  <li><a href="{% url 'view_students' %}">ALL DEPARTMENTS</a></li>
+                  {% for dept in departments %}
+                      <li><a href="{% url 'view_students' %}?department={{ dept|urlencode }}">{{ dept }}</a></li>
+                  {% endfor %}
               </ul>
+
             </div>
           </div>
           <form

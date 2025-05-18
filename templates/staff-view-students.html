@@ -118,13 +118,13 @@
                         <img
                           src="{{ student.photo.url }}"
                           alt="{{ student.surname }}'s photo"
-                          class="student-image"
+                          class="student-image" style="border-radius: 50%;"
                         />
                       {% else %}
                         <img
                           src="{% static 'images/images.jpeg' %}"
                           alt="Default photo"
-                          class="student-image"
+                          class="student-image" style="border-radius: 50%;"
                         />
                       {% endif %}
                       <div class="student-details">
@@ -163,11 +163,9 @@
     <script src="{% static 'js/script.js' %}"></script>
     <script>
       function toggleAll(level) {
-        const checkboxes = document.querySelectorAll(
-          `.student-checkbox.level-${level}`
-        );
+        const checkboxes = document.querySelectorAll(`.student-checkbox.level-${level}`);
         const button = event.target;
-        const isSelecting = button.textContent === "SELECT ALL";
+        const isSelecting = button.textContent.trim() === "SELECT ALL";
 
         checkboxes.forEach((checkbox) => {
           checkbox.checked = isSelecting;
@@ -195,44 +193,31 @@
         document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
           checkbox.addEventListener("change", function () {
             const level = this.classList[1].split("-")[1];
-            const levelCheckboxes = document.querySelectorAll(
-              `.student-checkbox.level-${level}`
-            );
-            const allChecked = Array.from(levelCheckboxes).every(
-              (cb) => cb.checked
-            );
-            const button = document.querySelector(
-              `button[onclick="toggleAll('${level}')"]`
-            );
+            const levelCheckboxes = document.querySelectorAll(`.student-checkbox.level-${level}`);
+            const allChecked = Array.from(levelCheckboxes).every((cb) => cb.checked);
+            const button = document.querySelector(`button[onclick="toggleAll('${level}')"]`);
             button.textContent = allChecked ? "DESELECT ALL" : "SELECT ALL";
           });
         });
 
-        document
-          .getElementById("searchInput")
-          .addEventListener("input", function (e) {
-            const searchTerm = e.target.value.trim();
+        document.getElementById("searchInput")?.addEventListener("input", function (e) {
+          const searchTerm = e.target.value.trim();
 
-            if (searchTerm.length >= 2) {
-              fetch(
-                `{% url 'staff_search_students' %}?term=${encodeURIComponent(
-                  searchTerm
-                )}`
-              )
-                .then((response) => response.text())
-                .then((html) => {
-                  const parser = new DOMParser();
-                  const doc = parser.parseFromString(html, "text/html");
-                  const studentList = doc.querySelector(
-                    ".student-list-wrapper"
-                  );
-                  document.querySelector(".student-list-wrapper").innerHTML =
-                    studentList.innerHTML;
+          if (searchTerm.length >= 2) {
+            fetch(`{% url 'staff_search_students' %}?term=${encodeURIComponent(searchTerm)}`)
+              .then((response) => response.text())
+              .then((html) => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, "text/html");
+                const studentList = doc.querySelector(".student-list-wrapper");
+                document.querySelector(".student-list-wrapper").innerHTML = studentList.innerHTML;
 
-                  initializeCheckboxes();
-                });
-            }
-          });
+                initializeCheckboxes();
+              });
+          }
+        });
+
+        initializeCheckboxes();
       });
 
       function initializeCheckboxes() {
@@ -254,24 +239,16 @@
         document.querySelectorAll(".student-checkbox").forEach((checkbox) => {
           checkbox.addEventListener("change", function () {
             const level = this.classList[1].split("-")[1];
-            const levelCheckboxes = document.querySelectorAll(
-              `.student-checkbox.level-${level}`
-            );
-            const allChecked = Array.from(levelCheckboxes).every(
-              (cb) => cb.checked
-            );
-            const button = document.querySelector(
-              `button[onclick="toggleAll('${level}')"]`
-            );
+            const levelCheckboxes = document.querySelectorAll(`.student-checkbox.level-${level}`);
+            const allChecked = Array.from(levelCheckboxes).every((cb) => cb.checked);
+            const button = document.querySelector(`button[onclick="toggleAll('${level}')"]`);
             button.textContent = allChecked ? "DESELECT ALL" : "SELECT ALL";
           });
         });
       }
 
       function exportSelectedStudents() {
-        const selectedCheckboxes = document.querySelectorAll(
-          ".student-checkbox:checked"
-        );
+        const selectedCheckboxes = document.querySelectorAll(".student-checkbox:checked");
         const studentIds = Array.from(selectedCheckboxes).map((cb) => cb.value);
 
         if (studentIds.length === 0) {
@@ -279,9 +256,7 @@
           return;
         }
 
-        window.location.href = `{% url 'export_students_pdf' %}?ids=${studentIds.join(
-          ","
-        )}`;
+        window.location.href = `{% url 'export_students_pdf' %}?ids=${studentIds.join(",")}`;
       }
     </script>
   </body>

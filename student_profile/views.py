@@ -73,8 +73,11 @@ def user_logout(request):
 @login_required
 @admin_required
 def dashboard(request):
+    departments = [choice[0] for choice in Student.DEPARTMENT_CHOICES]
+
     context = {
-        'user': request.user
+        'user': request.user,
+        'departments': departments,
     }
     return render(request, 'dashboard.html', context)
 
@@ -84,20 +87,24 @@ def view_students(request):
     selected_dept = request.GET.get('department', None)
     students_by_level = {}
     levels = [100, 200, 300, 400]
-    
+
+    # Use all departments from the model choices
+    departments = [choice[0] for choice in Student.DEPARTMENT_CHOICES]
+
+    # Fetch students based on department filter
+    if selected_dept:
+        students = Student.objects.filter(department__iexact=selected_dept.replace('_', ' '))
+    else:
+        students = Student.objects.all()
+
+    # Group students by level
     for level in levels:
-        if selected_dept:
-            students = Student.objects.filter(
-                department__iexact=selected_dept.replace('_', ' '),
-                level=str(level)
-            )
-        else:
-            students = Student.objects.filter(level=str(level))
-        students_by_level[level] = students.order_by('surname')
+        students_by_level[level] = students.filter(level=str(level)).order_by('surname')
     
     context = {
         'students_by_level': students_by_level,
         'levels': levels,
+        'departments': departments,
         'selected_dept': selected_dept,
         'department_name': selected_dept.replace('_', ' ') if selected_dept else 'All Departments'
     }
@@ -226,13 +233,14 @@ def modify_admin(request, id):
 @login_required
 @admin_required
 def view_admin(request):
-    # Query for all admin and staff members
+    departments = [choice[0] for choice in Student.DEPARTMENT_CHOICES]
     admins = AdminStaff.objects.filter(role='admin')
     staff = AdminStaff.objects.filter(role='staff')
     
     context = {
         'admins': admins,
         'staff': staff,
+        'departments': departments,
     }
     return render(request, 'view-admin.html', context)
 
@@ -283,7 +291,7 @@ def staff_view_students(request):
     selected_dept = request.GET.get('department')
     
     students_by_level = {}
-    levels = [100, 200, 300]
+    levels = [100, 200, 300, 400]
     
     for level in levels:
         # Build the query
@@ -335,7 +343,7 @@ def staff_search_students(request):
         ).order_by('level', 'surname')
 
         students_by_level = {}
-        levels = [100, 200, 300]
+        levels = [100, 200, 300, 400]
         
         for level in levels:
             students_by_level[level] = students.filter(level=str(level))
@@ -381,6 +389,7 @@ def modify_member(request, member_id):
     return render(request, 'modify_member.html', {'form': form, 'member': member})
 
 def search_students(request):
+    departments = [choice[0] for choice in Student.DEPARTMENT_CHOICES]
     term = request.GET.get('term', '')
     if not term:
         return redirect('view_students')
@@ -405,6 +414,7 @@ def search_students(request):
         'students_by_level': students_by_level,
         'levels': levels,
         'search_term': term,
+        'departments': departments,
         'is_search': True
     }
     
