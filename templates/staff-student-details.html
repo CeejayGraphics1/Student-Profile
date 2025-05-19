@@ -42,14 +42,14 @@
                 src="{{ student.photo.url }}"
                 alt="{{ student.surname }}'s photo"
                 width="100"
-                class="student-image"
+                class="student-image" style="border-radius: 0%;"
               />
               {% else %}
               <img
                 src="{% static 'images/images.jpeg' %}"
                 alt="{{ student.surname }}'s photo"
                 width="100"
-                class="student-image"
+                class="student-image" style="border-radius: 0%;"
               />
               {% endif %}
             </div>

@@ -39,62 +39,67 @@
                     {% endif %}
 
             <div class="upload-content">
-                <div class="photo-upload-section">
-                    <div class="photo-container">
-                        {% if student.photo %}
-                            <img id="preview" src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" />
-                        {% else %}
-                            <img id="preview" src="{% static 'images/images.jpeg' %}" alt="Default photo" />
-                        {% endif %}
-                        <div class="upload-overlay">
-                            <i class="lni lni-upload"></i>
-                            <span>UPLOAD A PICTURE</span>
-                        </div>
-                        <input type="file" name="photo" id="photo-upload" accept="image/*" class="photo-input" />
-                    </div>
-                </div>
+                
 
                 <form class="upload-form" method="POST" enctype="multipart/form-data">
                     {% csrf_token %}
-                    <div class="form-field">
-                        <span class="field-name">Surname:</span>
-                        <input type="text" name="surname" class="form-input" value="{{ student.surname }}" required>
+                    <div class="upload-content">
+                        <div class="photo-upload-section">
+                        <div class="photo-container">
+                            {% if student.photo %}
+                                <img id="preview" src="{{ student.photo.url }}" alt="{{ student.surname }}'s photo" />
+                            {% else %}
+                                <img id="preview" src="{% static 'images/images.jpeg' %}" alt="Default photo" />
+                            {% endif %}
+                            <div class="upload-overlay">
+                                <i class="lni lni-upload"></i>
+                                <span>UPLOAD A PICTURE</span>
+                            </div>
+                            <input type="file" name="photo" id="photo-upload" accept="image/*" class="photo-input" />
+                        </div>
                     </div>
-                    <div class="form-field">
-                        <span class="field-name">Other Names:</span>
-                        <input type="text" name="other_names" class="form-input" value="{{ student.other_names }}" required>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Date of Birth:</span>
-                        <input type="date" name="date_of_birth" class="form-input" value="{{ student.date_of_birth|date:'Y-m-d' }}" required>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Level:</span>
-                        <select name="level" class="form-input" required>
-                            <option value="100" {% if student.level == '100' %}selected{% endif %}>100</option>
-                            <option value="200" {% if student.level == '200' %}selected{% endif %}>200</option>
-                            <option value="300" {% if student.level == '300' %}selected{% endif %}>300</option>
-                            <option value="400" {% if student.level == '400' %}selected{% endif %}>400</option>
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Department:</span>
-                        <select name="department" class="form-input" required>
-                            {% for code, name in form.fields.department.choices %}
-                                {% if code != '' %}
-                                    <option value="{{ code }}" {% if student.department == code %}selected{% endif %}>{{ name }}</option>
-                                {% endif %}
-                            {% endfor %}
-                        </select>
-                    </div>
-                    <div class="form-field">
-                        <span class="field-name">Matric Number:</span>
-                        <input type="text" name="matric_number" class="form-input" value="{{ student.matric_number }}" required>
-                    </div>
+                    <div class="">
+                        <div class="form-field">
+                            <span class="field-name">Surname:</span>
+                            <input type="text" name="surname" class="form-input" value="{{ student.surname }}" required>
+                        </div>
+                        <div class="form-field">
+                            <span class="field-name">Other Names:</span>
+                            <input type="text" name="other_names" class="form-input" value="{{ student.other_names }}" required>
+                        </div>
+                        <div class="form-field">
+                            <span class="field-name">Date of Birth:</span>
+                            <input type="date" name="date_of_birth" class="form-input" value="{{ student.date_of_birth|date:'Y-m-d' }}" required>
+                        </div>
+                        <div class="form-field">
+                            <span class="field-name">Level:</span>
+                            <select name="level" class="form-input" required>
+                                <option value="100" {% if student.level == '100' %}selected{% endif %}>100</option>
+                                <option value="200" {% if student.level == '200' %}selected{% endif %}>200</option>
+                                <option value="300" {% if student.level == '300' %}selected{% endif %}>300</option>
+                                <option value="400" {% if student.level == '400' %}selected{% endif %}>400</option>
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <span class="field-name">Department:</span>
+                            <select name="department" class="form-input" required>
+                                {% for code, name in form.fields.department.choices %}
+                                    {% if code != '' %}
+                                        <option value="{{ code }}" {% if student.department == code %}selected{% endif %}>{{ name }}</option>
+                                    {% endif %}
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="form-field">
+                            <span class="field-name">Matric Number:</span>
+                            <input type="text" name="matric_number" class="form-input" value="{{ student.matric_number }}" required>
+                        </div>
 
-                    <button type="submit" class="submit-btn">
-                        <i class="lni lni-upload"></i> UPDATE
-                    </button>
+                        <button type="submit" class="submit-btn">
+                            <i class="lni lni-upload"></i> UPDATE
+                        </button>
+                    </div>
+                    </div>
                 </form>
             </div>
         </main>
