@@ -1639,6 +1639,10 @@ close-menu:hover {
     flex-direction: column;
   }
 
+  .dashboard-title{
+    font-size: 1.2rem;
+  }
+
   .student-photo {
     height: 350px; 
   }
