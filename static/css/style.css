@@ -1845,10 +1845,11 @@ close-menu:hover {
   }
 
   .submit-btn {
-    width: auto;
+    width: 100%;
     padding: 0.8rem 2rem;
     border-radius: 50px;
     margin-top: 1.5rem;
+    margin-bottom: 6rem !important;
     align-self: stretch;
   }
 
